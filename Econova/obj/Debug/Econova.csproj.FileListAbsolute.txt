@@ -1,0 +1,14 @@
+C:\Users\CamiloRamirez\Desktop\Econova\Econova\bin\Debug\Econova.exe.config
+C:\Users\CamiloRamirez\Desktop\Econova\Econova\bin\Debug\Econova.exe
+C:\Users\CamiloRamirez\Desktop\Econova\Econova\bin\Debug\Econova.pdb
+C:\Users\CamiloRamirez\Desktop\Econova\Econova\obj\Debug\Econova.csproj.AssemblyReference.cache
+C:\Users\CamiloRamirez\Desktop\Econova\Econova\obj\Debug\MainWindow.baml
+C:\Users\CamiloRamirez\Desktop\Econova\Econova\obj\Debug\MainWindow.g.cs
+C:\Users\CamiloRamirez\Desktop\Econova\Econova\obj\Debug\App.g.cs
+C:\Users\CamiloRamirez\Desktop\Econova\Econova\obj\Debug\Econova_MarkupCompile.cache
+C:\Users\CamiloRamirez\Desktop\Econova\Econova\obj\Debug\Econova.g.resources
+C:\Users\CamiloRamirez\Desktop\Econova\Econova\obj\Debug\Econova.Properties.Resources.resources
+C:\Users\CamiloRamirez\Desktop\Econova\Econova\obj\Debug\Econova.csproj.GenerateResource.cache
+C:\Users\CamiloRamirez\Desktop\Econova\Econova\obj\Debug\Econova.csproj.CoreCompileInputs.cache
+C:\Users\CamiloRamirez\Desktop\Econova\Econova\obj\Debug\Econova.exe
+C:\Users\CamiloRamirez\Desktop\Econova\Econova\obj\Debug\Econova.pdb
