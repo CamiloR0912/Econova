@@ -25,7 +25,6 @@
         <SolidColorBrush x:Key="TitleBarBg"       Color="#FFFFFF"/>
         <SolidColorBrush x:Key="WindowBorder"     Color="#D1D5DB"/>
 
-        <!-- Botón nav base -->
         <Style x:Key="NavButtonStyle" TargetType="Button">
             <Setter Property="Background"                 Value="Transparent"/>
             <Setter Property="BorderThickness"            Value="0"/>
@@ -56,14 +55,12 @@
             </Setter>
         </Style>
 
-        <!-- Botón nav activo -->
         <Style x:Key="NavButtonActiveStyle" TargetType="Button" BasedOn="{StaticResource NavButtonStyle}">
             <Setter Property="Background" Value="{StaticResource NavActive}"/>
             <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
         </Style>
 
-        <!-- Botón Manual (azul suave) -->
         <Style x:Key="NavButtonManualStyle" TargetType="Button">
             <Setter Property="Background"                 Value="#DBEAFE"/>
             <Setter Property="BorderThickness"            Value="0"/>
@@ -94,7 +91,6 @@
             </Setter>
         </Style>
 
-        <!-- Botón Salir (rojo suave) -->
         <Style x:Key="NavButtonSalirStyle" TargetType="Button">
             <Setter Property="Background"                 Value="#FEE2E2"/>
             <Setter Property="BorderThickness"            Value="0"/>
@@ -125,7 +121,6 @@
             </Setter>
         </Style>
 
-        <!-- Botones title bar -->
         <Style x:Key="TitleBarButtonStyle" TargetType="Button">
             <Setter Property="Width"           Value="46"/>
             <Setter Property="Height"          Value="32"/>
@@ -248,6 +243,7 @@
 
                     <StackPanel Grid.Row="0" Margin="8,12,8,0">
 
+                        <!-- Inicio -->
                         <Button Style="{StaticResource NavButtonActiveStyle}" Margin="0,1">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE80F;" FontFamily="Segoe MDL2 Assets"
@@ -256,22 +252,71 @@
                             </StackPanel>
                         </Button>
 
-                        <Button Style="{StaticResource NavButtonStyle}" Margin="0,1">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#xE787;" FontFamily="Segoe MDL2 Assets"
-                                           FontSize="14" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="Reservas" VerticalAlignment="Center"/>
+                        <!-- Reservas (expandible) -->
+                        <StackPanel Margin="0,1">
+                            <Button Style="{StaticResource NavButtonStyle}"
+                                    Click="BtnReservas_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE787;" FontFamily="Segoe MDL2 Assets"
+                                               FontSize="14" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Reservas" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock x:Name="ArrowReservas" Text="&#xE970;"
+                                               FontFamily="Segoe MDL2 Assets"
+                                               FontSize="10" VerticalAlignment="Center"
+                                               Foreground="#6B7280"/>
+                                </StackPanel>
+                            </Button>
+                            <StackPanel x:Name="SubMenuReservas" Visibility="Collapsed" Margin="22,0,0,0">
+                                <Button Style="{StaticResource NavButtonStyle}" Height="34">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="&#xE710;" FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="12" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Crear reserva" VerticalAlignment="Center" FontSize="12"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Style="{StaticResource NavButtonStyle}" Height="34">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="&#xE8A1;" FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="12" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Ver reservas" VerticalAlignment="Center" FontSize="12"/>
+                                    </StackPanel>
+                                </Button>
                             </StackPanel>
-                        </Button>
+                        </StackPanel>
 
-                        <Button Style="{StaticResource NavButtonStyle}" Margin="0,1">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="&#xE716;" FontFamily="Segoe MDL2 Assets"
-                                           FontSize="14" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                <TextBlock Text="Clientes" VerticalAlignment="Center"/>
+                        <!-- Clientes (expandible) -->
+                        <StackPanel Margin="0,1">
+                            <Button Style="{StaticResource NavButtonStyle}"
+                                    Click="BtnClientes_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="&#xE716;" FontFamily="Segoe MDL2 Assets"
+                                               FontSize="14" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="Clientes" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock x:Name="ArrowClientes" Text="&#xE970;"
+                                               FontFamily="Segoe MDL2 Assets"
+                                               FontSize="10" VerticalAlignment="Center"
+                                               Foreground="#6B7280"/>
+                                </StackPanel>
+                            </Button>
+                            <StackPanel x:Name="SubMenuClientes" Visibility="Collapsed" Margin="22,0,0,0">
+                                <Button Style="{StaticResource NavButtonStyle}" Height="34">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="&#xE710;" FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="12" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Crear cliente" VerticalAlignment="Center" FontSize="12"/>
+                                    </StackPanel>
+                                </Button>
+                                <Button Style="{StaticResource NavButtonStyle}" Height="34">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="&#xE8A1;" FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="12" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Ver clientes" VerticalAlignment="Center" FontSize="12"/>
+                                    </StackPanel>
+                                </Button>
                             </StackPanel>
-                        </Button>
+                        </StackPanel>
 
+                        <!-- Salas -->
                         <Button Style="{StaticResource NavButtonStyle}" Margin="0,1">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE8F1;" FontFamily="Segoe MDL2 Assets"
@@ -284,7 +329,6 @@
 
                     <!-- Botones inferiores -->
                     <StackPanel Grid.Row="1" Margin="8,0,8,12">
-
                         <Button Style="{StaticResource NavButtonManualStyle}"
                                 Margin="0,0,0,6"
                                 Click="BtnManual_Click">
@@ -303,7 +347,6 @@
                                 <TextBlock Text="Salir" VerticalAlignment="Center"/>
                             </StackPanel>
                         </Button>
-
                     </StackPanel>
                 </Grid>
             </Border>
@@ -391,7 +434,7 @@
                                 <TextBlock Text="Clientes"
                                            FontFamily="Segoe UI" FontSize="13" FontWeight="SemiBold"
                                            Foreground="{StaticResource TextPrimary}"/>
-                                <TextBlock Text="Consulta y administra clientes."
+                                <TextBlock Text="Crea un nuevo cliente."
                                            FontFamily="Segoe UI" FontSize="11"
                                            Foreground="{StaticResource TextSecondary}"
                                            Margin="0,4,0,0" TextWrapping="Wrap"/>

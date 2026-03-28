@@ -31,13 +31,25 @@ namespace Econova
                 this.WindowState = WindowState.Maximized;
         }
 
-        // Botón X de la title bar — cierra sin confirmar
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
-        // Botón "Salir" del sidebar — pide confirmación
+        private void BtnReservas_Click(object sender, RoutedEventArgs e)
+        {
+            bool abierto = SubMenuReservas.Visibility == Visibility.Visible;
+            SubMenuReservas.Visibility = abierto ? Visibility.Collapsed : Visibility.Visible;
+            ArrowReservas.Text = abierto ? "\uE970" : "\uE971";
+        }
+
+        private void BtnClientes_Click(object sender, RoutedEventArgs e)
+        {
+            bool abierto = SubMenuClientes.Visibility == Visibility.Visible;
+            SubMenuClientes.Visibility = abierto ? Visibility.Collapsed : Visibility.Visible;
+            ArrowClientes.Text = abierto ? "\uE970" : "\uE971";
+        }
+
         private void BtnSalir_Click(object sender, RoutedEventArgs e)
         {
             var resultado = MessageBox.Show(
@@ -50,12 +62,9 @@ namespace Econova
                 this.Close();
         }
 
-        // Botón "Manual de usuario" — aquí puedes abrir el PDF o una nueva ventana
         private void BtnManual_Click(object sender, RoutedEventArgs e)
         {
-            // Ejemplo: abrir un PDF llamado "manual.pdf" en la carpeta Assets
-            // System.Diagnostics.Process.Start("Assets/manual.pdf");
-
+            // Para abrir un PDF: System.Diagnostics.Process.Start("Assets/manual.pdf");
             MessageBox.Show(
                 "El manual de usuario estará disponible próximamente.",
                 "Manual de usuario",
