@@ -1,3 +1,6 @@
 <Solution>
+  <Folder Name="/Elementos de la solución/">
+    <File Path=".gitignore" />
+  </Folder>
   <Project Path="Econova/Econova.csproj" Id="a8e59f5f-ad40-4169-8f6a-d430ab4fa4b0" />
 </Solution>
