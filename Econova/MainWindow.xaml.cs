@@ -75,7 +75,7 @@ namespace Econova
         private void BtnVerReservas_Click(object sender, RoutedEventArgs e)
         {
             ActivarBoton(BtnVerReservas);
-            // FrameContenido.Navigate(new PaginaVerReservas());
+            FrameContenido.Navigate(new PaginaVerReservas());
         }
 
         private void BtnClientes_Click(object sender, RoutedEventArgs e)
