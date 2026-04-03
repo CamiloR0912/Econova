@@ -32,3 +32,9 @@ D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\PaginaInicio.baml
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\PaginaInicio.g.cs
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\PaginaVerReservas.baml
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\PaginaVerReservas.g.cs
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\PaginaCrearCliente.baml
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\PaginaCrearCliente.g.cs
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\PaginaVerClientes.baml
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\PaginaVerClientes.g.cs
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\VentanaEditarCliente.baml
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\VentanaEditarCliente.g.cs

@@ -89,13 +89,13 @@ namespace Econova
         private void BtnCrearCliente_Click(object sender, RoutedEventArgs e)
         {
             ActivarBoton(BtnCrearCliente);
-            // FrameContenido.Navigate(new PaginaCrearCliente());
+            FrameContenido.Navigate(new PaginaCrearCliente());
         }
 
         private void BtnVerClientes_Click(object sender, RoutedEventArgs e)
         {
             ActivarBoton(BtnVerClientes);
-            // FrameContenido.Navigate(new PaginaVerClientes());
+            FrameContenido.Navigate(new PaginaVerClientes());
         }
 
         private void BtnSalas_Click(object sender, RoutedEventArgs e)

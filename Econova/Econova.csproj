@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="VentanaEditarCliente.xaml.cs">
+      <DependentUpon>VentanaEditarCliente.xaml</DependentUpon>
+    </Compile>
     <Page Include="CrearReserva.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -74,7 +77,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PaginaCrearCliente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PaginaInicio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PaginaVerClientes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -82,10 +93,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="VentanaEditarCliente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PaginaCrearCliente.xaml.cs">
+      <DependentUpon>PaginaCrearCliente.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PaginaInicio.xaml.cs">
       <DependentUpon>PaginaInicio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PaginaVerClientes.xaml.cs">
+      <DependentUpon>PaginaVerClientes.xaml</DependentUpon>
     </Compile>
     <Compile Include="PaginaVerReservas.xaml.cs">
       <DependentUpon>PaginaVerReservas.xaml</DependentUpon>
