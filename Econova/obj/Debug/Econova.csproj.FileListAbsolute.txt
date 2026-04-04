@@ -51,3 +51,5 @@ D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Pages\PaginaCrea
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Pages\PaginaVerClientes.baml
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Pages\PaginaVerReservas.baml
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Windows\VentanaEditarCliente.baml
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Windows\VentanaConfirmarSalir.baml
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Windows\VentanaConfirmarSalir.g.cs

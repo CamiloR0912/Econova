@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Universidad\Septimo\software\Econova\Econova\App.xaml
-7-350752496
+8-853880144
 
-2415220906
+25-478054542
 13-38814620
-Views\Pages\PaginaCrearReserva.xaml;Views\Windows\MainWindow.xaml;Views\Pages\PaginaCrearCliente.xaml;Views\Pages\PaginaInicio.xaml;Views\Pages\PaginaVerClientes.xaml;Views\Pages\PaginaVerReservas.xaml;Views\Windows\VentanaEditarCliente.xaml;
+Views\Pages\PaginaCrearReserva.xaml;Views\Windows\MainWindow.xaml;Views\Pages\PaginaCrearCliente.xaml;Views\Pages\PaginaInicio.xaml;Views\Pages\PaginaVerClientes.xaml;Views\Pages\PaginaVerReservas.xaml;Views\Windows\VentanaConfirmarSalir.xaml;Views\Windows\VentanaEditarCliente.xaml;
 
-False
+True
 

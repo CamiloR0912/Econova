@@ -57,6 +57,9 @@
     </ApplicationDefinition>
     <Compile Include="Services\IDialogService.cs" />
     <Compile Include="Views\Services\WpfDialogService.cs" />
+    <Compile Include="Views\Windows\VentanaConfirmarSalir.xaml.cs">
+      <DependentUpon>VentanaConfirmarSalir.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\VentanaEditarCliente.xaml.cs">
       <DependentUpon>VentanaEditarCliente.xaml</DependentUpon>
     </Compile>
@@ -94,6 +97,10 @@
     <Page Include="Views\Pages\PaginaVerReservas.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Windows\VentanaConfirmarSalir.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Windows\VentanaEditarCliente.xaml">
       <SubType>Designer</SubType>

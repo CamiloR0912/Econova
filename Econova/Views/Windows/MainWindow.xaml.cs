@@ -21,9 +21,9 @@ namespace Econova.Views.Windows
         private void ActivarBoton(Button botonActivo)
         {
             Button[] botones = {
-                BtnInicio, BtnReservas, BtnCrearReserva, BtnVerReservas,
-                BtnClientes, BtnCrearCliente, BtnVerClientes, BtnSalas
-            };
+        BtnInicio, BtnReservas, BtnCrearReserva, BtnVerReservas,
+        BtnClientes, BtnCrearCliente, BtnVerClientes, BtnSalas
+    };
 
             foreach (var btn in botones)
             {
@@ -33,6 +33,28 @@ namespace Econova.Views.Windows
 
             if (botonActivo != null)
                 botonActivo.Style = (Style)FindResource("NavButtonActiveStyle");
+
+            //Cierra ambos submenús por defecto
+            SubMenuReservas.Visibility = Visibility.Collapsed;
+            SubMenuClientes.Visibility = Visibility.Collapsed;
+            ArrowReservas.Text = "\uE970";
+            ArrowClientes.Text = "\uE970";
+
+            //Reabre solo el submenú que corresponde al botón activo
+            if (botonActivo == BtnReservas ||
+                botonActivo == BtnCrearReserva ||
+                botonActivo == BtnVerReservas)
+            {
+                SubMenuReservas.Visibility = Visibility.Visible;
+                ArrowReservas.Text = "\uE971";
+            }
+            else if (botonActivo == BtnClientes ||
+                     botonActivo == BtnCrearCliente ||
+                     botonActivo == BtnVerClientes)
+            {
+                SubMenuClientes.Visibility = Visibility.Visible;
+                ArrowClientes.Text = "\uE971";
+            }
         }
 
         // ── Title bar ──
@@ -67,10 +89,14 @@ namespace Econova.Views.Windows
 
         private void BtnReservas_Click(object sender, RoutedEventArgs e)
         {
-            bool abierto = SubMenuReservas.Visibility == Visibility.Visible;
-            SubMenuReservas.Visibility = abierto ? Visibility.Collapsed : Visibility.Visible;
-            ArrowReservas.Text = abierto ? "\uE970" : "\uE971";
+            // Si ya está abierto, lo cierra (toggle); si no, ActivarBoton lo abre
+            bool yaAbierto = SubMenuReservas.Visibility == Visibility.Visible;
             ActivarBoton(BtnReservas);
+            if (yaAbierto)
+            {
+                SubMenuReservas.Visibility = Visibility.Collapsed;
+                ArrowReservas.Text = "\uE970";
+            }
         }
 
         private void BtnCrearReserva_Click(object sender, RoutedEventArgs e)
@@ -87,10 +113,13 @@ namespace Econova.Views.Windows
 
         private void BtnClientes_Click(object sender, RoutedEventArgs e)
         {
-            bool abierto = SubMenuClientes.Visibility == Visibility.Visible;
-            SubMenuClientes.Visibility = abierto ? Visibility.Collapsed : Visibility.Visible;
-            ArrowClientes.Text = abierto ? "\uE970" : "\uE971";
+            bool yaAbierto = SubMenuClientes.Visibility == Visibility.Visible;
             ActivarBoton(BtnClientes);
+            if (yaAbierto)
+            {
+                SubMenuClientes.Visibility = Visibility.Collapsed;
+                ArrowClientes.Text = "\uE970";
+            }
         }
 
         private void BtnCrearCliente_Click(object sender, RoutedEventArgs e)
@@ -118,7 +147,11 @@ namespace Econova.Views.Windows
 
         private void BtnSalir_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            var ventana = new VentanaConfirmarSalir();
+            ventana.Owner = this;
+
+            if (ventana.ShowDialog() == true)
+                Application.Current.Shutdown();
         }
     }
 }
