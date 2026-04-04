@@ -1,14 +1,17 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Econova.ViewModels;
+using Econova.Views.Pages;
 
-namespace Econova
+namespace Econova.Views.Windows
 {
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
             // Cargar inicio y marcarlo como activo
             ActivarBoton(BtnInicio);
             FrameContenido.Navigate(new PaginaInicio());
@@ -23,9 +26,13 @@ namespace Econova
             };
 
             foreach (var btn in botones)
-                btn.Style = (Style)FindResource("NavButtonStyle");
+            {
+                if (btn != null)
+                    btn.Style = (Style)FindResource("NavButtonStyle");
+            }
 
-            botonActivo.Style = (Style)FindResource("NavButtonActiveStyle");
+            if (botonActivo != null)
+                botonActivo.Style = (Style)FindResource("NavButtonActiveStyle");
         }
 
         // ── Title bar ──
@@ -101,29 +108,17 @@ namespace Econova
         private void BtnSalas_Click(object sender, RoutedEventArgs e)
         {
             ActivarBoton(BtnSalas);
-            // FrameContenido.Navigate(new PaginaSalas());
-        }
-
-        // ── Salir y Manual ──
-        private void BtnSalir_Click(object sender, RoutedEventArgs e)
-        {
-            var resultado = MessageBox.Show(
-                "¿Estás seguro de que deseas cerrar la aplicación?",
-                "Confirmar cierre",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
-
-            if (resultado == MessageBoxResult.Yes)
-                this.Close();
+            // Navegar a página de salas si existe
         }
 
         private void BtnManual_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(
-                "El manual de usuario estará disponible próximamente.",
-                "Manual de usuario",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+            MessageBox.Show("Abriendo manual de usuario...", "Manual", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void BtnSalir_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

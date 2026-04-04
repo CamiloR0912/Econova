@@ -1,6 +1,6 @@
-﻿using System.Windows.Controls;
+using System.Windows.Controls;
 
-namespace Econova
+namespace Econova.Views.Pages
 {
     public partial class PaginaInicio : Page
     {

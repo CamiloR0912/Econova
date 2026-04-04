@@ -1,6 +1,7 @@
-﻿<Window x:Class="Econova.MainWindow"
+<Window x:Class="Econova.Views.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:Econova.ViewModels"
         Title="Econova"
         Icon="Assets/icono.ico"
         Width="1100" Height="720"

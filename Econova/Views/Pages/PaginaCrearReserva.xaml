@@ -1,6 +1,7 @@
-<Page x:Class="Econova.PaginaCrearReserva"
+<Page x:Class="Econova.Views.Pages.PaginaCrearReserva"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:vm="clr-namespace:Econova.ViewModels"
       Background="White">
 
     <Page.Resources>
@@ -510,19 +511,21 @@
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="TxtCedula"
                                  Grid.Column="0"
+                                 Text="{Binding Cedula, UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource InputStyle}"
                                  ToolTip="Ej: 1234567890"
+                                 MaxLength="10"
                                  PreviewTextInput="SoloNumeros_PreviewTextInput"/>
                         <Button Grid.Column="2"
                                 Style="{StaticResource SearchButtonStyle}"
                                 Content="&#xE721;"
                                 ToolTip="Buscar cliente"
-                                Click="BtnBuscarCliente_Click"/>
+                                Command="{Binding BuscarClienteCommand}"/>
                     </Grid>
 
                     <!-- Panel resultado cliente -->
                     <Border x:Name="PanelCliente"
-                            Visibility="Collapsed"
+                            Visibility="{Binding PanelClienteVisibility}"
                             Background="#F0FDF4"
                             BorderBrush="#BBF7D0"
                             BorderThickness="1"
@@ -543,9 +546,11 @@
                             </Border>
                             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                 <TextBlock x:Name="TxtNombreCliente"
+                                           Text="{Binding NombreCliente}"
                                            FontFamily="Segoe UI" FontSize="13"
                                            FontWeight="SemiBold" Foreground="#15803D"/>
                                 <TextBlock x:Name="TxtInfoCliente"
+                                           Text="{Binding InfoCliente}"
                                            FontFamily="Segoe UI" FontSize="12"
                                            Foreground="#16A34A"/>
                             </StackPanel>
@@ -553,9 +558,9 @@
                     </Border>
 
                     <!-- Botón confirmar -->
-                    <Button Content="Confirmar reserva"
+                    <Button Content="Confirmar Reserva"
                             Style="{StaticResource ConfirmButtonStyle}"
-                            Click="BtnConfirmarReserva_Click"/>
+                            Command="{Binding ConfirmarReservaCommand}"/>
 
                 </StackPanel>
             </Border>

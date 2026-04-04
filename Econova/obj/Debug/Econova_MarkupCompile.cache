@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\
+C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\
 Econova
 none
 false
 DEBUG;TRACE
-D:\Universidad\Septimo\software\Econova\Econova\App.xaml
-7-1035341766
+C:\Users\CamiloRamirez\Documents\Econova\Econova\App.xaml
+7-350752496
 
-11-865595704
+21-478199505
 13-38814620
-CrearReserva.xaml;MainWindow.xaml;PaginaCrearCliente.xaml;PaginaInicio.xaml;PaginaVerClientes.xaml;PaginaVerReservas.xaml;VentanaEditarCliente.xaml;
+Views\Pages\PaginaCrearReserva.xaml;Views\Windows\MainWindow.xaml;Views\Pages\PaginaCrearCliente.xaml;Views\Pages\PaginaInicio.xaml;Views\Pages\PaginaVerClientes.xaml;Views\Pages\PaginaVerReservas.xaml;Views\Windows\VentanaEditarCliente.xaml;
 
-False
+True
 

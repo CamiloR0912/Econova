@@ -55,14 +55,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="VentanaEditarCliente.xaml.cs">
+    <Compile Include="Views\Windows\VentanaEditarCliente.xaml.cs">
       <DependentUpon>VentanaEditarCliente.xaml</DependentUpon>
     </Compile>
-    <Page Include="CrearReserva.xaml">
+    <Page Include="Views\Pages\PaginaCrearReserva.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -70,47 +70,57 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CrearReserva.xaml.cs">
-      <DependentUpon>CrearReserva.xaml</DependentUpon>
+    <Compile Include="Views\Pages\PaginaCrearReserva.xaml.cs">
+      <DependentUpon>PaginaCrearReserva.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PaginaCrearCliente.xaml">
+    <Page Include="Views\Pages\PaginaCrearCliente.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PaginaInicio.xaml">
+    <Page Include="Views\Pages\PaginaInicio.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PaginaVerClientes.xaml">
+    <Page Include="Views\Pages\PaginaVerClientes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PaginaVerReservas.xaml">
+    <Page Include="Views\Pages\PaginaVerReservas.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VentanaEditarCliente.xaml">
+    <Page Include="Views\Windows\VentanaEditarCliente.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="PaginaCrearCliente.xaml.cs">
+    <Compile Include="Core\ObservableObject.cs" />
+    <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="Models\Cliente.cs" />
+    <Compile Include="Models\Reserva.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\PaginaCrearClienteViewModel.cs" />
+    <Compile Include="ViewModels\PaginaVerClientesViewModel.cs" />
+    <Compile Include="ViewModels\PaginaVerReservasViewModel.cs" />
+    <Compile Include="ViewModels\PaginaCrearReservaViewModel.cs" />
+    <Compile Include="ViewModels\VentanaEditarClienteViewModel.cs" />
+    <Compile Include="Views\Pages\PaginaCrearCliente.xaml.cs">
       <DependentUpon>PaginaCrearCliente.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PaginaInicio.xaml.cs">
+    <Compile Include="Views\Pages\PaginaInicio.xaml.cs">
       <DependentUpon>PaginaInicio.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PaginaVerClientes.xaml.cs">
+    <Compile Include="Views\Pages\PaginaVerClientes.xaml.cs">
       <DependentUpon>PaginaVerClientes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PaginaVerReservas.xaml.cs">
+    <Compile Include="Views\Pages\PaginaVerReservas.xaml.cs">
       <DependentUpon>PaginaVerReservas.xaml</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

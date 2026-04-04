@@ -1,6 +1,7 @@
-<Page x:Class="Econova.PaginaVerReservas"
+<Page x:Class="Econova.Views.Pages.PaginaVerReservas"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:vm="clr-namespace:Econova.ViewModels"
       Background="White">
 
     <Page.Resources>
@@ -187,13 +188,21 @@
                                    VerticalAlignment="Center"/>
                     </Border>
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="Reservas"
+                        <TextBlock x:Name="TxtFechaDia"
+                                   Text="{Binding FechaDiaTexto}"
                                    FontFamily="Segoe UI" FontSize="18" FontWeight="Bold"
                                    Foreground="#000000"/>
-                        <TextBlock x:Name="TxtSubtitulo"
-                                   Text="Vista del día"
-                                   FontFamily="Segoe UI" FontSize="12"
-                                   Foreground="#6B7280" Margin="0,2,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                            <TextBlock x:Name="TxtDiaSemana"
+                                       Text="{Binding DiaSemanaTexto}"
+                                       FontFamily="Segoe UI" FontSize="12"
+                                       FontWeight="SemiBold" Foreground="#6B7280"/>
+                            <TextBlock Text=" • " Foreground="#D1D5DB"/>
+                            <TextBlock x:Name="TxtSubtitulo"
+                                       Text="{Binding SubtituloTexto}"
+                                       FontFamily="Segoe UI" FontSize="12"
+                                       Foreground="#6B7280"/>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
 
@@ -202,7 +211,7 @@
                     <Button x:Name="BtnVistaCalendario"
                             Style="{StaticResource ViewButtonActiveStyle}"
                             Margin="0,0,8,0"
-                            Click="BtnVistaCalendario_Click">
+                            Command="{Binding VerCalendarioCommand}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE787;" FontFamily="Segoe MDL2 Assets"
                                        FontSize="13" Margin="0,0,6,0"
@@ -212,7 +221,7 @@
                     </Button>
                     <Button x:Name="BtnVistaTodas"
                             Style="{StaticResource ViewButtonStyle}"
-                            Click="BtnVistaTodas_Click">
+                            Command="{Binding VerTodasCommand}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE8A1;" FontFamily="Segoe MDL2 Assets"
                                        FontSize="13" Margin="0,0,6,0"
@@ -228,7 +237,7 @@
         <Grid Grid.Row="1">
 
             <!-- ── VISTA CALENDARIO ── -->
-            <Grid x:Name="PanelCalendario" Visibility="Visible">
+            <Grid x:Name="PanelCalendario" Visibility="{Binding CalendarioVisibility}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -250,15 +259,15 @@
                                 Style="{StaticResource NavCalButtonStyle}"
                                 Content="&#xE76B;"
                                 ToolTip="Día anterior"
-                                Click="BtnDiaAnterior_Click"/>
+                                Command="{Binding DiaAnteriorCommand}"/>
 
                         <StackPanel Grid.Column="1" HorizontalAlignment="Center"
                                     VerticalAlignment="Center">
-                            <TextBlock x:Name="TxtFechaDia"
+                            <TextBlock Text="{Binding FechaDiaTexto}"
                                        FontFamily="Segoe UI" FontSize="15"
                                        FontWeight="Bold" Foreground="#000000"
                                        HorizontalAlignment="Center"/>
-                            <TextBlock x:Name="TxtDiaSemana"
+                            <TextBlock Text="{Binding DiaSemanaTexto}"
                                        FontFamily="Segoe UI" FontSize="12"
                                        Foreground="#6B7280"
                                        HorizontalAlignment="Center"/>
@@ -268,7 +277,7 @@
                                 Style="{StaticResource NavCalButtonStyle}"
                                 Content="&#xE76C;"
                                 ToolTip="Día siguiente"
-                                Click="BtnDiaSiguiente_Click"/>
+                                Command="{Binding DiaSiguienteCommand}"/>
                     </Grid>
                 </Border>
 
@@ -404,7 +413,7 @@
             </Grid>
 
             <!-- ── VISTA TODAS LAS RESERVAS ── -->
-            <Grid x:Name="PanelTodasReservas" Visibility="Collapsed">
+            <Grid x:Name="PanelTodasReservas" Visibility="{Binding TodasReservasVisibility}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -435,6 +444,7 @@
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"/>         
                                 <TextBox x:Name="TxtBuscar"
+                                     Text="{Binding TextoBusqueda, UpdateSourceTrigger=PropertyChanged}"
                                      Grid.Column="1"
                                      BorderThickness="0"
                                      Background="Transparent"
@@ -443,13 +453,13 @@
                                      Height="36"
                                      Width="304"
                                      HorizontalAlignment="Left"
-                                     VerticalContentAlignment="Center"
-                                     TextChanged="TxtBuscar_TextChanged"/>
+                                     VerticalContentAlignment="Center"/>
                             </Grid>
                         </Border>
 
                         <!-- Contador -->
                         <TextBlock x:Name="TxtContador"
+                                   Text="{Binding ContadorTexto}"
                                    Grid.Column="1"
                                    FontFamily="Segoe UI" FontSize="13"
                                    Foreground="#6B7280"
@@ -495,7 +505,7 @@
                         </Border>
 
                         <!-- Filas de reservas — se generan desde code-behind -->
-                        <ItemsControl x:Name="ListaReservas">
+                        <ItemsControl x:Name="ListaReservas" ItemsSource="{Binding ReservasFiltradas}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Border BorderBrush="{StaticResource BorderColor}"
@@ -553,8 +563,8 @@
                                                 VerticalAlignment="Center">
                                                 <Button Style="{StaticResource BtnEditarStyle}"
                                                     Margin="0,0,8,0"
-                                                    Tag="{Binding Id}"
-                                                    Click="BtnEditar_Click">
+                                                    Command="{Binding DataContext.EditarCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                    CommandParameter="{Binding Id}">
                                                     <StackPanel Orientation="Horizontal" Margin="4,0">
                                                         <TextBlock Text="&#xE70F;" FontFamily="Segoe MDL2 Assets"
                                                            FontSize="12" Margin="0,0,6,0"
@@ -563,8 +573,8 @@
                                                     </StackPanel>
                                                 </Button>
                                                 <Button Style="{StaticResource BtnCancelarStyle}"
-                                                    Tag="{Binding Id}"
-                                                    Click="BtnCancelar_Click">
+                                                    Command="{Binding DataContext.CancelarCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                    CommandParameter="{Binding Id}">
                                                     <StackPanel Orientation="Horizontal" Margin="4,0">
                                                         <TextBlock Text="&#xE711;" FontFamily="Segoe MDL2 Assets"
                                                            FontSize="12" Margin="0,0,6,0"

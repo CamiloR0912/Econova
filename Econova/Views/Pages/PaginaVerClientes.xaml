@@ -1,7 +1,8 @@
-﻿<Page x:Class="Econova.PaginaVerClientes"
+<Page x:Class="Econova.Views.Pages.PaginaVerClientes"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Background="White">
+      xmlns:vm="clr-namespace:Econova.ViewModels"
+      Background="#F3F4F6">
 
     <Page.Resources>
         <SolidColorBrush x:Key="AccentBrush"  Color="#2563EB"/>
@@ -99,7 +100,7 @@
                                    FontFamily="Segoe UI" FontSize="18"
                                    FontWeight="Bold" Foreground="#000000"/>
                         <TextBlock x:Name="TxtSubtitulo"
-                                   Text="Todos los clientes registrados"
+                                   Text="{Binding SubtituloTexto}"
                                    FontFamily="Segoe UI" FontSize="12"
                                    Foreground="#6B7280" Margin="0,2,0,0"/>
                     </StackPanel>
@@ -162,20 +163,21 @@
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"/>
                         <TextBox x:Name="TxtBuscar"
-                                 Grid.Column="1"
-                                 BorderThickness="0"
-                                 Background="Transparent"
-                                 FontFamily="Segoe UI" FontSize="13"
-                                 Foreground="#000000"
-                                 Height="36" Width="344"
-                                 HorizontalAlignment="Left"
-                                 VerticalContentAlignment="Center"
-                                 TextChanged="TxtBuscar_TextChanged"/>
+                         Text="{Binding TextoBusqueda, UpdateSourceTrigger=PropertyChanged}"
+                         Grid.Column="1"
+                         BorderThickness="0"
+                         Background="Transparent"
+                         FontFamily="Segoe UI" FontSize="13"
+                         Foreground="#000000"
+                         Height="36" Width="344"
+                         HorizontalAlignment="Left"
+                         VerticalContentAlignment="Center"/>
                     </Grid>
                 </Border>
 
                 <TextBlock x:Name="TxtContador"
                            Grid.Column="1"
+                           Text="{Binding ContadorTexto}"
                            FontFamily="Segoe UI" FontSize="13"
                            Foreground="#6B7280"
                            VerticalAlignment="Center"/>
@@ -220,7 +222,7 @@
                 </Border>
 
                 <!-- Filas -->
-                <ItemsControl x:Name="ListaClientes">
+                <ItemsControl x:Name="ListaClientes" ItemsSource="{Binding ClientesFiltrados}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border BorderBrush="{StaticResource BorderColor}"
@@ -309,8 +311,8 @@
                                             </StackPanel>
                                         </Button>
                                         <Button Style="{StaticResource BtnEliminarStyle}"
-                                                Tag="{Binding Id}"
-                                                Click="BtnEliminar_Click">
+                                                Command="{Binding DataContext.EliminarCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                CommandParameter="{Binding Id}">
                                             <StackPanel Orientation="Horizontal" Margin="4,0">
                                                 <TextBlock Text="&#xE74D;"
                                                            FontFamily="Segoe MDL2 Assets"

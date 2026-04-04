@@ -38,3 +38,15 @@ D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\PaginaVerClientes.baml
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\PaginaVerClientes.g.cs
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\VentanaEditarCliente.baml
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\VentanaEditarCliente.g.cs
+C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Econova.csproj.AssemblyReference.cache
+C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Views\Pages\PaginaInicio.baml
+C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Views\Pages\PaginaCrearReserva.g.cs
+C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Views\Windows\MainWindow.g.cs
+C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Views\Pages\PaginaCrearCliente.g.cs
+C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Views\Pages\PaginaInicio.g.cs
+C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Views\Pages\PaginaVerClientes.g.cs
+C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Views\Pages\PaginaVerReservas.g.cs
+C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Views\Windows\VentanaEditarCliente.g.cs
+C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\App.g.cs
+C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Econova_MarkupCompile.cache
+C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Econova_MarkupCompile.lref
