@@ -5,13 +5,15 @@
       Background="White">
 
     <Page.Resources>
-        <SolidColorBrush x:Key="AccentBrush"  Color="#2563EB"/>
-        <SolidColorBrush x:Key="TextPrimary"  Color="#000000"/>
-        <SolidColorBrush x:Key="TextSecondary" Color="#6B7280"/>
-        <SolidColorBrush x:Key="BorderColor"  Color="#E5E7EB"/>
-        <SolidColorBrush x:Key="InputBg"      Color="#F9FAFB"/>
+        <!-- 👇 Converter para bool → Visibility -->
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
 
-        <!-- Botón de vista (Calendario / Todas) -->
+        <SolidColorBrush x:Key="AccentBrush"   Color="#2563EB"/>
+        <SolidColorBrush x:Key="TextPrimary"   Color="#000000"/>
+        <SolidColorBrush x:Key="TextSecondary" Color="#6B7280"/>
+        <SolidColorBrush x:Key="BorderColor"   Color="#E5E7EB"/>
+        <SolidColorBrush x:Key="InputBg"       Color="#F9FAFB"/>
+
         <Style x:Key="ViewButtonStyle" TargetType="Button">
             <Setter Property="FontFamily"      Value="Segoe UI"/>
             <Setter Property="FontSize"        Value="13"/>
@@ -44,15 +46,13 @@
             </Setter>
         </Style>
 
-        <!-- Botón de vista activo -->
         <Style x:Key="ViewButtonActiveStyle" TargetType="Button"
                BasedOn="{StaticResource ViewButtonStyle}">
-            <Setter Property="Background"   Value="#2563EB"/>
-            <Setter Property="BorderBrush"  Value="#2563EB"/>
-            <Setter Property="Foreground"   Value="White"/>
+            <Setter Property="Background"  Value="#2563EB"/>
+            <Setter Property="BorderBrush" Value="#2563EB"/>
+            <Setter Property="Foreground"  Value="White"/>
         </Style>
 
-        <!-- Botón de navegación del calendario (flechas) -->
         <Style x:Key="NavCalButtonStyle" TargetType="Button">
             <Setter Property="Width"           Value="32"/>
             <Setter Property="Height"          Value="32"/>
@@ -79,7 +79,6 @@
             </Setter>
         </Style>
 
-        <!-- Botón acción (editar/cancelar en tabla) -->
         <Style x:Key="ActionButtonStyle" TargetType="Button">
             <Setter Property="Height"          Value="30"/>
             <Setter Property="Padding"         Value="12,0"/>
@@ -108,15 +107,6 @@
             </Setter>
         </Style>
 
-        <!-- Botón ver (azul) -->
-        <Style x:Key="BtnVerStyle" TargetType="Button"
-               BasedOn="{StaticResource ActionButtonStyle}">
-            <Setter Property="Background"  Value="#EFF6FF"/>
-            <Setter Property="BorderBrush" Value="#BFDBFE"/>
-            <Setter Property="Foreground"  Value="#1D4ED8"/>
-        </Style>
-
-        <!-- Botón editar (amarillo) -->
         <Style x:Key="BtnEditarStyle" TargetType="Button"
                BasedOn="{StaticResource ActionButtonStyle}">
             <Setter Property="Background"  Value="#FFFBEB"/>
@@ -124,7 +114,6 @@
             <Setter Property="Foreground"  Value="#92400E"/>
         </Style>
 
-        <!-- Botón cancelar (rojo) -->
         <Style x:Key="BtnCancelarStyle" TargetType="Button"
                BasedOn="{StaticResource ActionButtonStyle}">
             <Setter Property="Background"  Value="#FEF2F2"/>
@@ -132,32 +121,22 @@
             <Setter Property="Foreground"  Value="#DC2626"/>
         </Style>
 
-        <!-- Encabezado de columna tabla -->
         <Style x:Key="ColHeaderStyle" TargetType="TextBlock">
-            <Setter Property="FontFamily"  Value="Segoe UI"/>
-            <Setter Property="FontSize"    Value="12"/>
-            <Setter Property="FontWeight"  Value="SemiBold"/>
-            <Setter Property="Foreground"  Value="#6B7280"/>
-            <Setter Property="Padding"     Value="12,0"/>
+            <Setter Property="FontFamily"        Value="Segoe UI"/>
+            <Setter Property="FontSize"          Value="12"/>
+            <Setter Property="FontWeight"        Value="SemiBold"/>
+            <Setter Property="Foreground"        Value="#6B7280"/>
+            <Setter Property="Padding"           Value="12,0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
-        <!-- Celda de datos tabla -->
         <Style x:Key="CellStyle" TargetType="TextBlock">
-            <Setter Property="FontFamily"  Value="Segoe UI"/>
-            <Setter Property="FontSize"    Value="13"/>
-            <Setter Property="Foreground"  Value="#000000"/>
-            <Setter Property="Padding"     Value="12,0"/>
+            <Setter Property="FontFamily"        Value="Segoe UI"/>
+            <Setter Property="FontSize"          Value="13"/>
+            <Setter Property="Foreground"        Value="#000000"/>
+            <Setter Property="Padding"           Value="12,0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
-        </Style>
-
-        <!-- Franja horaria del calendario -->
-        <Style x:Key="HourSlotStyle" TargetType="Border">
-            <Setter Property="BorderBrush"     Value="#F3F4F6"/>
-            <Setter Property="BorderThickness" Value="0,0,0,1"/>
-            <Setter Property="Height"          Value="56"/>
-            <Setter Property="Background"      Value="Transparent"/>
+            <Setter Property="TextTrimming"      Value="CharacterEllipsis"/>
         </Style>
     </Page.Resources>
 
@@ -167,7 +146,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- ══════ ENCABEZADO FIJO ══════ -->
+        <!-- ══════ ENCABEZADO ══════ -->
         <Border Grid.Row="0" Background="White"
                 BorderBrush="{StaticResource BorderColor}"
                 BorderThickness="0,0,0,1"
@@ -178,7 +157,6 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Título -->
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Border Width="40" Height="40" CornerRadius="10"
                             Background="#EFF6FF" Margin="0,0,14,0">
@@ -188,18 +166,15 @@
                                    VerticalAlignment="Center"/>
                     </Border>
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock x:Name="TxtFechaDia"
-                                   Text="{Binding FechaDiaTexto}"
-                                   FontFamily="Segoe UI" FontSize="18" FontWeight="Bold"
-                                   Foreground="#000000"/>
+                        <TextBlock Text="{Binding FechaDiaTexto}"
+                                   FontFamily="Segoe UI" FontSize="18"
+                                   FontWeight="Bold" Foreground="#000000"/>
                         <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-                            <TextBlock x:Name="TxtDiaSemana"
-                                       Text="{Binding DiaSemanaTexto}"
+                            <TextBlock Text="{Binding DiaSemanaTexto}"
                                        FontFamily="Segoe UI" FontSize="12"
                                        FontWeight="SemiBold" Foreground="#6B7280"/>
                             <TextBlock Text=" • " Foreground="#D1D5DB"/>
-                            <TextBlock x:Name="TxtSubtitulo"
-                                       Text="{Binding SubtituloTexto}"
+                            <TextBlock Text="{Binding SubtituloTexto}"
                                        FontFamily="Segoe UI" FontSize="12"
                                        Foreground="#6B7280"/>
                         </StackPanel>
@@ -208,8 +183,7 @@
 
                 <!-- Botones de vista -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <Button x:Name="BtnVistaCalendario"
-                            Style="{StaticResource ViewButtonActiveStyle}"
+                    <Button Style="{StaticResource ViewButtonActiveStyle}"
                             Margin="0,0,8,0"
                             Command="{Binding VerCalendarioCommand}">
                         <StackPanel Orientation="Horizontal">
@@ -219,8 +193,7 @@
                             <TextBlock Text="Hoy" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                    <Button x:Name="BtnVistaTodas"
-                            Style="{StaticResource ViewButtonStyle}"
+                    <Button Style="{StaticResource ViewButtonStyle}"
                             Command="{Binding VerTodasCommand}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE8A1;" FontFamily="Segoe MDL2 Assets"
@@ -233,11 +206,12 @@
             </Grid>
         </Border>
 
-        <!-- ══════ CONTENIDO (switchable) ══════ -->
+        <!-- ══════ CONTENIDO ══════ -->
         <Grid Grid.Row="1">
 
             <!-- ── VISTA CALENDARIO ── -->
-            <Grid x:Name="PanelCalendario" Visibility="{Binding CalendarioVisibility}">
+            <Grid x:Name="PanelCalendario"
+                  Visibility="{Binding MostrarCalendario, Converter={StaticResource BoolToVis}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -285,103 +259,68 @@
                 <ScrollViewer Grid.Row="1"
                               VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled">
-                    <Grid Margin="0,0,0,0">
+                    <Grid>
                         <Grid.ColumnDefinitions>
-                            <!-- Columna de horas -->
                             <ColumnDefinition Width="64"/>
-                            <!-- Columna de eventos -->
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Franjas horarias — hora label -->
+                        <!-- Labels de hora -->
                         <StackPanel Grid.Column="0">
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="06:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="06:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="07:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="07:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="08:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="08:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="09:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="09:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="10:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="10:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="11:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="11:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="12:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="12:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="13:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="13:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="14:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="14:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="15:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="15:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="16:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="16:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="17:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="17:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="18:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="18:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="19:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="19:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="20:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="20:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                             <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
-                                <TextBlock Text="21:00" FontFamily="Segoe UI" FontSize="11"
-                                           Foreground="#9CA3AF" Margin="8,6,0,0"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Text="21:00" FontFamily="Segoe UI" FontSize="11" Foreground="#9CA3AF" Margin="8,6,0,0" VerticalAlignment="Top"/>
                             </Border>
                         </StackPanel>
 
-                        <!-- Área de eventos del día (canvas relativo) -->
+                        <!-- Área de eventos -->
                         <Border Grid.Column="1"
                                 BorderBrush="#F3F4F6"
                                 BorderThickness="1,0,0,0">
-                            <!-- Fondo de franjas -->
                             <Grid>
                                 <StackPanel>
                                     <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1" Background="Transparent"/>
@@ -402,10 +341,7 @@
                                     <Border Height="56" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1" Background="Transparent"/>
                                 </StackPanel>
 
-                                <!-- Canvas de eventos — se llena desde code-behind -->
-                                <Canvas x:Name="CanvasEventos" Height="896">
-                                    <!-- Los eventos se agregan dinámicamente aquí -->
-                                </Canvas>
+                                <Canvas x:Name="CanvasEventos" Height="896"/>
                             </Grid>
                         </Border>
                     </Grid>
@@ -413,7 +349,8 @@
             </Grid>
 
             <!-- ── VISTA TODAS LAS RESERVAS ── -->
-            <Grid x:Name="PanelTodasReservas" Visibility="{Binding TodasReservasVisibility}">
+            <Grid x:Name="PanelTodasReservas"
+                  Visibility="{Binding MostrarTodas, Converter={StaticResource BoolToVis}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -430,44 +367,38 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Buscador -->
                         <Border Background="White" BorderBrush="#9CA3AF"
-                            BorderThickness="1" CornerRadius="8"
-                            Width="340" HorizontalAlignment="Left">
+                                BorderThickness="1" CornerRadius="8"
+                                Width="340" HorizontalAlignment="Left">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="36"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="&#xE721;" FontFamily="Segoe MDL2 Assets"
-                                   FontSize="13" Foreground="#9CA3AF"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"/>         
-                                <TextBox x:Name="TxtBuscar"
-                                     Text="{Binding TextoBusqueda, UpdateSourceTrigger=PropertyChanged}"
-                                     Grid.Column="1"
-                                     BorderThickness="0"
-                                     Background="Transparent"
-                                     FontFamily="Segoe UI" FontSize="13"
-                                     Foreground="#000000"
-                                     Height="36"
-                                     Width="304"
-                                     HorizontalAlignment="Left"
-                                     VerticalContentAlignment="Center"/>
+                                           FontSize="13" Foreground="#9CA3AF"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding TextoBusqueda, UpdateSourceTrigger=PropertyChanged}"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         FontFamily="Segoe UI" FontSize="13"
+                                         Foreground="#000000"
+                                         Height="36"
+                                         VerticalContentAlignment="Center"/>
                             </Grid>
                         </Border>
 
-                        <!-- Contador -->
-                        <TextBlock x:Name="TxtContador"
+                        <TextBlock Grid.Column="1"
                                    Text="{Binding ContadorTexto}"
-                                   Grid.Column="1"
                                    FontFamily="Segoe UI" FontSize="13"
                                    Foreground="#6B7280"
                                    VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
 
-                <!-- Tabla de reservas -->
+                <!-- Tabla -->
                 <ScrollViewer Grid.Row="1"
                               VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled">
@@ -504,14 +435,13 @@
                             </Grid>
                         </Border>
 
-                        <!-- Filas de reservas — se generan desde code-behind -->
-                        <ItemsControl x:Name="ListaReservas" ItemsSource="{Binding ReservasFiltradas}">
+                        <!-- Filas -->
+                        <ItemsControl ItemsSource="{Binding ReservasFiltradas}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Border BorderBrush="{StaticResource BorderColor}"
                                             BorderThickness="1,0,1,1"
-                                            Height="52"
-                                            Background="White">
+                                            Height="52" Background="White">
                                         <Border.Style>
                                             <Style TargetType="Border">
                                                 <Style.Triggers>
@@ -531,20 +461,16 @@
                                                 <ColumnDefinition Width="190"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{Binding Numero}"
+                                            <TextBlock Grid.Column="0" Text="{Binding Numero}"
                                                        Style="{StaticResource CellStyle}"
                                                        Foreground="#9CA3AF"
                                                        HorizontalAlignment="Center"/>
-                                            <TextBlock Grid.Column="1"
-                                                       Text="{Binding Sala}"
+                                            <TextBlock Grid.Column="1" Text="{Binding Sala}"
                                                        Style="{StaticResource CellStyle}"
                                                        FontWeight="SemiBold"/>
-                                            <TextBlock Grid.Column="2"
-                                                       Text="{Binding Cliente}"
+                                            <TextBlock Grid.Column="2" Text="{Binding Cliente}"
                                                        Style="{StaticResource CellStyle}"/>
-                                            <TextBlock Grid.Column="3"
-                                                       Text="{Binding Cedula}"
+                                            <TextBlock Grid.Column="3" Text="{Binding Cedula}"
                                                        Style="{StaticResource CellStyle}"
                                                        Foreground="#6B7280"/>
                                             <StackPanel Grid.Column="4"
@@ -558,27 +484,27 @@
                                                            Foreground="#6B7280"/>
                                             </StackPanel>
                                             <StackPanel Grid.Column="5"
-                                                Orientation="Horizontal"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center">
+                                                        Orientation="Horizontal"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center">
                                                 <Button Style="{StaticResource BtnEditarStyle}"
-                                                    Margin="0,0,8,0"
-                                                    Command="{Binding DataContext.EditarCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                    CommandParameter="{Binding Id}">
+                                                        Margin="0,0,8,0"
+                                                        Command="{Binding DataContext.EditarCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                        CommandParameter="{Binding Id}">
                                                     <StackPanel Orientation="Horizontal" Margin="4,0">
                                                         <TextBlock Text="&#xE70F;" FontFamily="Segoe MDL2 Assets"
-                                                           FontSize="12" Margin="0,0,6,0"
-                                                           VerticalAlignment="Center"/>
+                                                                   FontSize="12" Margin="0,0,6,0"
+                                                                   VerticalAlignment="Center"/>
                                                         <TextBlock Text="Editar" VerticalAlignment="Center"/>
                                                     </StackPanel>
                                                 </Button>
                                                 <Button Style="{StaticResource BtnCancelarStyle}"
-                                                    Command="{Binding DataContext.CancelarCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                    CommandParameter="{Binding Id}">
+                                                        Command="{Binding DataContext.CancelarCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                        CommandParameter="{Binding Id}">
                                                     <StackPanel Orientation="Horizontal" Margin="4,0">
                                                         <TextBlock Text="&#xE711;" FontFamily="Segoe MDL2 Assets"
-                                                           FontSize="12" Margin="0,0,6,0"
-                                                           VerticalAlignment="Center"/>
+                                                                   FontSize="12" Margin="0,0,6,0"
+                                                                   VerticalAlignment="Center"/>
                                                         <TextBlock Text="Cancelar" VerticalAlignment="Center"/>
                                                     </StackPanel>
                                                 </Button>
@@ -589,13 +515,12 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
 
-                        <!-- Pie redondeado de la tabla -->
+                        <!-- Pie de tabla -->
                         <Border Background="#F9FAFB"
                                 BorderBrush="{StaticResource BorderColor}"
                                 BorderThickness="1,0,1,1"
                                 CornerRadius="0,0,8,8"
                                 Height="12"/>
-
                     </StackPanel>
                 </ScrollViewer>
             </Grid>

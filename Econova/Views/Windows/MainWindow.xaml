@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:Econova.ViewModels"
         Title="Econova"
-        Icon="Assets/icono.ico"
+        Icon="/Assets/icono.ico"
         Width="1100" Height="720"
         MinWidth="800" MinHeight="500"
         WindowStartupLocation="CenterScreen"
@@ -206,7 +206,7 @@
 
                     <StackPanel Grid.Column="0" Orientation="Horizontal"
                                 VerticalAlignment="Center" Margin="14,0,0,0">
-                        <Image Source="Assets/icono.ico"
+                        <Image Source="/Assets/icono.ico"
                                Width="24" Height="24" Margin="0,0,8,0"
                                RenderOptions.BitmapScalingMode="HighQuality"/>
                         <TextBlock Text="Econova"

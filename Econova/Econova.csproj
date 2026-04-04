@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Services\IDialogService.cs" />
+    <Compile Include="Views\Services\WpfDialogService.cs" />
     <Compile Include="Views\Windows\VentanaEditarCliente.xaml.cs">
       <DependentUpon>VentanaEditarCliente.xaml</DependentUpon>
     </Compile>

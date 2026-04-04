@@ -1,17 +1,17 @@
-using System;
-using System.Text.RegularExpressions;
-using System.Windows;
 using System.Windows.Input;
 using Econova.Core;
+using Econova.Services;
 
 namespace Econova.ViewModels
 {
     public class PaginaCrearReservaViewModel : ObservableObject
     {
+        private readonly IDialogService _dialogService;
+
         private string _cedula;
         private string _nombreCliente;
         private string _infoCliente;
-        private Visibility _panelClienteVisibility = Visibility.Collapsed;
+        private bool _panelClienteVisible = false;
         private string _amPmEntrada = "AM";
         private string _amPmSalida = "AM";
 
@@ -33,10 +33,11 @@ namespace Econova.ViewModels
             set => SetProperty(ref _infoCliente, value);
         }
 
-        public Visibility PanelClienteVisibility
+        // 👇 bool en lugar de Visibility
+        public bool PanelClienteVisible
         {
-            get => _panelClienteVisibility;
-            set => SetProperty(ref _panelClienteVisibility, value);
+            get => _panelClienteVisible;
+            set => SetProperty(ref _panelClienteVisible, value);
         }
 
         public string AmPmEntrada
@@ -56,8 +57,9 @@ namespace Econova.ViewModels
         public ICommand ToggleAmPmSalidaCommand { get; }
         public ICommand ConfirmarReservaCommand { get; }
 
-        public PaginaCrearReservaViewModel()
+        public PaginaCrearReservaViewModel(IDialogService dialogService) // 👈
         {
+            _dialogService = dialogService;
             BuscarClienteCommand = new RelayCommand(o => BuscarCliente());
             ToggleAmPmEntradaCommand = new RelayCommand(o => AmPmEntrada = AmPmEntrada == "AM" ? "PM" : "AM");
             ToggleAmPmSalidaCommand = new RelayCommand(o => AmPmSalida = AmPmSalida == "AM" ? "PM" : "AM");
@@ -68,29 +70,29 @@ namespace Econova.ViewModels
         {
             if (string.IsNullOrEmpty(Cedula))
             {
-                MessageBox.Show("Por favor ingresa un número de cédula.",
-                    "Campo vacío", MessageBoxButton.OK, MessageBoxImage.Warning);
+                _dialogService.Informar("Por favor ingresa un número de cédula.", "Campo vacío");
                 return;
             }
 
+            // Simulación de búsqueda — reemplazar con consulta real a BD
             if (Cedula == "1234567890")
             {
                 NombreCliente = "Juan Pérez";
                 InfoCliente = $"{Cedula} • 310 000 0000";
-                PanelClienteVisibility = Visibility.Visible;
+                PanelClienteVisible = true;
             }
             else
             {
-                PanelClienteVisibility = Visibility.Collapsed;
-                MessageBox.Show($"No se encontró ningún cliente con la cédula {Cedula}.",
-                    "Cliente no encontrado", MessageBoxButton.OK, MessageBoxImage.Information);
+                PanelClienteVisible = false;
+                _dialogService.Informar(
+                    $"No se encontró ningún cliente con la cédula {Cedula}.",
+                    "Cliente no encontrado");
             }
         }
 
         private void ConfirmarReserva()
         {
-            // Logic for confirmation can be added here
-            MessageBox.Show("¡Reserva confirmada exitosamente!", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+            _dialogService.Informar("¡Reserva confirmada exitosamente!", "Éxito");
         }
     }
 }

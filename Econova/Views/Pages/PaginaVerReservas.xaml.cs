@@ -1,10 +1,10 @@
 using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Econova.ViewModels;
 using Econova.Models;
+using Econova.Views.Services;
 
 namespace Econova.Views.Pages
 {
@@ -16,15 +16,15 @@ namespace Econova.Views.Pages
         public PaginaVerReservas()
         {
             InitializeComponent();
-            var vm = new PaginaVerReservasViewModel();
+            var vm = new PaginaVerReservasViewModel(new WpfDialogService());
             DataContext = vm;
+
             vm.PropertyChanged += (s, e) =>
             {
                 if (e.PropertyName == nameof(PaginaVerReservasViewModel.ReservasDelDia))
-                {
                     DibujarEventosCalendario();
-                }
             };
+
             DibujarEventosCalendario();
         }
 
@@ -34,17 +34,15 @@ namespace Econova.Views.Pages
             CanvasEventos.Children.Clear();
 
             var vm = DataContext as PaginaVerReservasViewModel;
-            if (vm == null || vm.ReservasDelDia == null) return;
-
-            var reservasDelDia = vm.ReservasDelDia;
+            if (vm?.ReservasDelDia == null) return;
 
             string[] fondos = { "#DBEAFE", "#DCFCE7", "#FEF3C7", "#FCE7F3", "#EDE9FE" };
             string[] bordes = { "#93C5FD", "#86EFAC", "#FCD34D", "#F9A8D4", "#C4B5FD" };
             string[] textos = { "#1D4ED8", "#15803D", "#92400E", "#9D174D", "#6D28D9" };
 
-            for (int i = 0; i < reservasDelDia.Count; i++)
+            for (int i = 0; i < vm.ReservasDelDia.Count; i++)
             {
-                var r = reservasDelDia[i];
+                var r = vm.ReservasDelDia[i];
                 int color = i % fondos.Length;
 
                 double horaInicioPx = (r.FechaEntradaDt.Hour + r.FechaEntradaDt.Minute / 60.0 - HoraInicio) * AlturaHora;
@@ -65,6 +63,7 @@ namespace Econova.Views.Pages
                 };
 
                 var stack = new StackPanel();
+
                 stack.Children.Add(new TextBlock
                 {
                     Text = r.Sala,
@@ -74,7 +73,6 @@ namespace Econova.Views.Pages
                     Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(textos[color])),
                     TextTrimming = TextTrimming.CharacterEllipsis
                 });
-
                 stack.Children.Add(new TextBlock
                 {
                     Text = $"{r.HoraEntrada} – {r.HoraSalida}",
@@ -83,7 +81,6 @@ namespace Econova.Views.Pages
                     Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString(textos[color])),
                     Opacity = 0.8
                 });
-
                 stack.Children.Add(new TextBlock
                 {
                     Text = r.Cliente,
@@ -95,24 +92,28 @@ namespace Econova.Views.Pages
                 });
 
                 borde.Child = stack;
-                borde.MouseLeftButtonUp += (s, e) => MostrarDetalle(r);
+
+                // Captura local para el closure del evento
+                var reserva = r;
+                borde.MouseLeftButtonUp += (s, e) => MostrarDetalle(reserva);
 
                 Canvas.SetTop(borde, Math.Max(horaInicioPx, 0));
                 Canvas.SetLeft(borde, 0);
-
-                borde.SetBinding(Border.WidthProperty, new System.Windows.Data.Binding("ActualWidth") { Source = CanvasEventos });
+                borde.SetBinding(Border.WidthProperty,
+                    new System.Windows.Data.Binding("ActualWidth") { Source = CanvasEventos });
 
                 CanvasEventos.Children.Add(borde);
             }
         }
 
+        // MessageBox aquí es correcto — estamos en la View ✅
         private void MostrarDetalle(Reserva r)
         {
             MessageBox.Show(
                 $"Detalle de la reserva #{r.Numero}\n\n" +
-                $"Sala: {r.Sala}\n" +
+                $"Sala:    {r.Sala}\n" +
                 $"Cliente: {r.Cliente}\n" +
-                $"Cédula: {r.Cedula}\n" +
+                $"Cédula:  {r.Cedula}\n" +
                 $"Entrada: {r.FechaEntrada} {r.HoraEntrada}\n" +
                 $"Salida:  {r.FechaSalida} {r.HoraSalida}",
                 "Información de Reserva",

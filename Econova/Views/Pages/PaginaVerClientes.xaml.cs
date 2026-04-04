@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using Econova.ViewModels;
 using Econova.Models;
 using Econova.Views.Windows;
+using Econova.Views.Services; // 👈
 
 namespace Econova.Views.Pages
 {
@@ -12,7 +13,7 @@ namespace Econova.Views.Pages
         public PaginaVerClientes()
         {
             InitializeComponent();
-            DataContext = new PaginaVerClientesViewModel();
+            DataContext = new PaginaVerClientesViewModel(new WpfDialogService()); // 👈
         }
 
         private void BtnNuevoCliente_Click(object sender, RoutedEventArgs e)
@@ -27,19 +28,14 @@ namespace Econova.Views.Pages
             var c = vm?.ClientesFiltrados.FirstOrDefault(x => x.Id == id);
             if (c == null) return;
 
-            // Abre ventana de edición con los datos del cliente
             var ventana = new VentanaEditarCliente(c);
             ventana.Owner = Window.GetWindow(this);
 
             if (ventana.ShowDialog() == true)
             {
-                // Note: The object c is already updated by the dialog if it modifies the same object.
-                // However, we should ensure the ViewModel is aware of changes.
-                // In a full MVVM approach, this would be handled differently.
-                
-                MessageBox.Show("Cliente actualizado exitosamente.",
-                    "Actualización exitosa",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
+                new WpfDialogService().Informar(
+                    "Cliente actualizado exitosamente.",
+                    "Actualización exitosa");
             }
         }
     }
