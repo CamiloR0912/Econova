@@ -55,8 +55,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Sala.cs" />
     <Compile Include="Services\IDialogService.cs" />
+    <Compile Include="ViewModels\PaginaVerSalasViewModel.cs" />
+    <Compile Include="ViewModels\VentanaAgregarSalaViewModel.cs" />
+    <Compile Include="Views\Pages\PaginaVerSalas.xaml.cs">
+      <DependentUpon>PaginaVerSalas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Services\WpfDialogService.cs" />
+    <Compile Include="Views\Windows\ConfirmacionClienteWindow.xaml.cs">
+      <DependentUpon>ConfirmacionClienteWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\ConfirmacionEliminarClienteWindow.xaml.cs">
+      <DependentUpon>ConfirmacionEliminarClienteWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\ConfirmacionReservaWindow.xaml.cs">
+      <DependentUpon>ConfirmacionReservaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\ReservaExitosaWindow.xaml.cs">
+      <DependentUpon>ReservaExitosaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\VentanaAgregarSalas.xaml.cs">
+      <DependentUpon>VentanaAgregarSalas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\VentanaConfirmarSalir.xaml.cs">
       <DependentUpon>VentanaConfirmarSalir.xaml</DependentUpon>
     </Compile>
@@ -66,6 +87,22 @@
     <Page Include="Views\Pages\PaginaCrearReserva.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Pages\PaginaVerSalas.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Windows\ConfirmacionClienteWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\ConfirmacionEliminarClienteWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\ConfirmacionReservaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -95,6 +132,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\PaginaVerReservas.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Windows\ReservaExitosaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\VentanaAgregarSalas.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -1,9 +1,10 @@
+using Econova.ViewModels;
+using Econova.Views.Services;
+using Econova.Views.Windows;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Econova.ViewModels;
-using Econova.Views.Services;
 
 namespace Econova.Views.Pages
 {
@@ -12,7 +13,18 @@ namespace Econova.Views.Pages
         public PaginaCrearReserva()
         {
             InitializeComponent();
-            DataContext = new PaginaCrearReservaViewModel(new WpfDialogService());
+            var vm = new PaginaCrearReservaViewModel(new WpfDialogService());
+
+            // 👇 Conecta la navegación: busca el MainWindow y navega al inicio
+            vm.NavegaAlInicio = () =>
+            {
+                if (Application.Current.MainWindow is MainWindow main)
+                {
+                    main.NavigarAlInicio(); // método que añadiremos en el paso 7
+                }
+            };
+
+            DataContext = vm;
         }
 
         // 👇 Alterna el botón AM/PM de entrada

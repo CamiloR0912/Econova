@@ -57,6 +57,12 @@ namespace Econova.Views.Windows
             }
         }
 
+        public void NavigarAlInicio()
+        {
+            ActivarBoton(BtnInicio);
+            FrameContenido.Navigate(new PaginaInicio());
+        }
+
         // ── Title bar ──
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -137,7 +143,7 @@ namespace Econova.Views.Windows
         private void BtnSalas_Click(object sender, RoutedEventArgs e)
         {
             ActivarBoton(BtnSalas);
-            // Navegar a página de salas si existe
+            FrameContenido.Navigate(new PaginaVerSalas());
         }
 
         private void BtnManual_Click(object sender, RoutedEventArgs e)

@@ -63,15 +63,14 @@ namespace Econova.ViewModels
                 var c = _todosClientes.FirstOrDefault(x => x.Id == id);
                 if (c == null) return;
 
-                bool confirmado = _dialogService.Confirmar(
-                    $"¿Estás seguro de que deseas eliminar este cliente?\n\n" +
-                    $"  Nombre:   {c.NombreCompleto}\n" +
-                    $"  Cédula:   {c.Cedula}\n" +
-                    $"  Email:    {c.Email}\n\n" +
-                    $"Esta acción no se puede deshacer.",
-                    "Confirmar eliminación");
+                var ventana = new Econova.Views.Windows.ConfirmacionEliminarClienteWindow(
+                    c.NombreCompleto, c.Cedula, c.Email)
+                {
+                    Owner = System.Windows.Application.Current.MainWindow
+                };
+                ventana.ShowDialog();
 
-                if (confirmado)
+                if (ventana.Confirmado)
                 {
                     _todosClientes.Remove(c);
 
@@ -79,10 +78,6 @@ namespace Econova.ViewModels
                         _todosClientes[i].Numero = i + 1;
 
                     Filtrar();
-
-                    _dialogService.Informar(
-                        "Cliente eliminado exitosamente.",
-                        "Eliminación confirmada");
                 }
             }
         }

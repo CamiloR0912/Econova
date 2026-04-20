@@ -79,28 +79,24 @@ namespace Econova.ViewModels
                     "Campo requerido", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
             if (string.IsNullOrWhiteSpace(Apellidos))
             {
                 MessageBox.Show("Por favor ingresa los apellidos del cliente.",
                     "Campo requerido", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
             if (string.IsNullOrWhiteSpace(Cedula) || Cedula.Length < 6)
             {
                 MessageBox.Show("Por favor ingresa una cédula válida (mínimo 6 dígitos).",
                     "Campo requerido", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
             if (string.IsNullOrWhiteSpace(Telefono) || Telefono.Length < 7)
             {
                 MessageBox.Show("Por favor ingresa un teléfono válido (mínimo 7 dígitos).",
                     "Campo requerido", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
             if (string.IsNullOrWhiteSpace(Email) ||
                 !Regex.IsMatch(Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
@@ -108,7 +104,6 @@ namespace Econova.ViewModels
                     "Campo requerido", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
             if (string.IsNullOrWhiteSpace(Direccion))
             {
                 MessageBox.Show("Por favor ingresa la dirección del cliente.",
@@ -116,36 +111,19 @@ namespace Econova.ViewModels
                 return;
             }
 
-            // ── Ventana de confirmación ──
-            string resumen =
-                $"Por favor verifica los datos antes de guardar:\n\n" +
-                $"  Nombres:    {Nombres} {Apellidos}\n" +
-                $"  Cédula:     {Cedula}\n" +
-                $"  Teléfono:   {Telefono}\n" +
-                $"  Email:      {Email}\n" +
-                $"  Dirección:  {Direccion}\n\n" +
-                $"¿Deseas guardar este cliente?";
+            // ── Ventana de confirmación personalizada ──
+            var ventana = new Econova.Views.Windows.ConfirmacionClienteWindow(
+                $"{Nombres} {Apellidos}", Cedula, Telefono, Email, Direccion)
+            {
+                Owner = System.Windows.Application.Current.MainWindow
+            };
+            ventana.ShowDialog();
 
-            var resultado = MessageBox.Show(
-                resumen,
-                "Confirmar cliente",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
-
-            if (resultado == MessageBoxResult.Yes)
+            if (ventana.Confirmado)
             {
                 // ── Aquí guardarás el cliente en tu base de datos ──
 
-                MessageBox.Show(
-                    $"¡Cliente {Nombres} {Apellidos} registrado exitosamente!",
-                    "Cliente guardado",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information);
-
-                // Note: Navigation in MVVM usually requires a Navigation Service.
-                // For simplicity, we can use the Window's Frame or pass the NavigationService.
-                // However, the current code uses this.NavigationService in the Page.
-                // I will handle navigation later or keep it in code-behind if it's too complex for now.
+                Limpiar(); // 👈 deja los campos en blanco
             }
         }
     }

@@ -1,6 +1,7 @@
-using System.Windows.Input;
 using Econova.Core;
 using Econova.Services;
+using System;
+using System.Windows.Input;
 
 namespace Econova.ViewModels
 {
@@ -14,6 +15,24 @@ namespace Econova.ViewModels
         private bool _panelClienteVisible = false;
         private string _amPmEntrada = "AM";
         private string _amPmSalida = "AM";
+        public Action NavegaAlInicio { get; set; }
+
+        private void ConfirmarReserva()
+        {
+            var sala = "Sala seleccionada";
+            var fechas = "Fechas seleccionadas";
+            var cliente = PanelClienteVisible
+                ? $"{NombreCliente} • {Cedula}"
+                : "Sin cliente asignado";
+
+            bool confirmado = _dialogService.ConfirmarReserva(sala, fechas, cliente);
+
+            if (confirmado)
+            {
+                _dialogService.MostrarReservaExitosa(sala, fechas, cliente);
+                NavegaAlInicio?.Invoke();
+            }
+        }
 
         public string Cedula
         {
@@ -90,9 +109,6 @@ namespace Econova.ViewModels
             }
         }
 
-        private void ConfirmarReserva()
-        {
-            _dialogService.Informar("¡Reserva confirmada exitosamente!", "Éxito");
-        }
+        
     }
 }
