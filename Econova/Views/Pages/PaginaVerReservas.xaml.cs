@@ -106,19 +106,13 @@ namespace Econova.Views.Pages
             }
         }
 
-        // MessageBox aquí es correcto — estamos en la View ✅
         private void MostrarDetalle(Reserva r)
         {
-            MessageBox.Show(
-                $"Detalle de la reserva #{r.Numero}\n\n" +
-                $"Sala:    {r.Sala}\n" +
-                $"Cliente: {r.Cliente}\n" +
-                $"Cédula:  {r.Cedula}\n" +
-                $"Entrada: {r.FechaEntrada} {r.HoraEntrada}\n" +
-                $"Salida:  {r.FechaSalida} {r.HoraSalida}",
-                "Información de Reserva",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+            var ventana = new Econova.Views.Windows.VentanaDetalleReserva(r)
+            {
+                Owner = System.Windows.Window.GetWindow(this)
+            };
+            ventana.ShowDialog();
         }
     }
 }

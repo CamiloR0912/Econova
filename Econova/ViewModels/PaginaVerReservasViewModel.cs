@@ -126,9 +126,14 @@ namespace Econova.ViewModels
             {
                 var r = _todasReservas.FirstOrDefault(x => x.Id == id);
                 if (r != null)
-                    _dialogService.Informar(
-                        $"Abriendo editor para la reserva #{r.Numero} de {r.Cliente}",
-                        "Editar Reserva");
+                {
+                    bool guardado = _dialogService.EditarReserva(r);
+                    if (guardado)
+                    {
+                        Filtrar();
+                        ActualizarDia();
+                    }
+                }
             }
         }
 
@@ -139,12 +144,9 @@ namespace Econova.ViewModels
                 var r = _todasReservas.FirstOrDefault(x => x.Id == id);
                 if (r == null) return;
 
-                bool confirmado = _dialogService.Confirmar(
-                    $"¿Estás seguro de que deseas cancelar la reserva #{r.Numero}?\n\n" +
-                    $"  Cliente: {r.Cliente}\n" +
-                    $"  Sala:    {r.Sala}\n\n" +
-                    $"Esta acción no se puede deshacer.",
-                    "Confirmar Cancelación");
+                bool confirmado = _dialogService.ConfirmarEliminarReserva(
+                    r.Sala, r.Cliente, r.Cedula,
+                    $"{r.FechaEntrada} {r.HoraEntrada}");
 
                 if (confirmado)
                 {

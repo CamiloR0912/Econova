@@ -63,6 +63,30 @@ namespace Econova.Views.Windows
             FrameContenido.Navigate(new PaginaInicio());
         }
 
+        public void NavigarAVerReservas()
+        {
+            ActivarBoton(BtnVerReservas);
+            FrameContenido.Navigate(new PaginaVerReservas());
+        }
+
+        public void NavigarAVerClientes()
+        {
+            ActivarBoton(BtnVerClientes);
+            FrameContenido.Navigate(new PaginaVerClientes());
+        }
+
+        public void NavigarASalas()
+        {
+            ActivarBoton(BtnSalas);
+            FrameContenido.Navigate(new PaginaVerSalas());
+        }
+
+        public void NavigarACrearCliente()
+        {
+            ActivarBoton(BtnCrearCliente);
+            FrameContenido.Navigate(new PaginaCrearCliente());
+        }
+
         // ── Title bar ──
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

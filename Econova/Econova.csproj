@@ -173,6 +173,44 @@
     <Compile Include="Views\Pages\PaginaVerReservas.xaml.cs">
       <DependentUpon>PaginaVerReservas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\VentanaEditarReservaViewModel.cs" />
+    <Compile Include="Views\Windows\VentanaDetalleReserva.xaml.cs">
+      <DependentUpon>VentanaDetalleReserva.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\VentanaEditarReserva.xaml.cs">
+      <DependentUpon>VentanaEditarReserva.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\ConfirmacionEliminarReservaWindow.xaml.cs">
+      <DependentUpon>ConfirmacionEliminarReservaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\ConfirmacionEliminarSalaWindow.xaml.cs">
+      <DependentUpon>ConfirmacionEliminarSalaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\VentanaConfirmacionExito.xaml.cs">
+      <DependentUpon>VentanaConfirmacionExito.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Windows\VentanaDetalleReserva.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\VentanaEditarReserva.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\ConfirmacionEliminarReservaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\ConfirmacionEliminarSalaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\VentanaConfirmacionExito.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

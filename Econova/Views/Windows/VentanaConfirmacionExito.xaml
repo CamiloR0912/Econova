@@ -1,0 +1,96 @@
+<Window x:Class="Econova.Views.Windows.VentanaConfirmacionExito"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="" Height="Auto" Width="400"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        SizeToContent="Height">
+
+    <Window.Resources>
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Height"          Value="42"/>
+            <Setter Property="FontFamily"      Value="Segoe UI"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Setter Property="FontWeight"      Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor"          Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="9">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Opacity" Value="0.85"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="bd" Property="Opacity" Value="0.70"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Margin="12" CornerRadius="16" Background="White">
+        <Border.Effect>
+            <DropShadowEffect Color="#000000" BlurRadius="32"
+                              ShadowDepth="4" Opacity="0.13"/>
+        </Border.Effect>
+
+        <StackPanel>
+            <!-- Franja verde superior -->
+            <Border CornerRadius="16,16,0,0" Height="6">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#059669" Offset="0"/>
+                        <GradientStop Color="#34D399" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+            <StackPanel Margin="32,28,32,28">
+                <!-- Ícono -->
+                <Border Width="64" Height="64" CornerRadius="32"
+                        Background="#F0FDF4" HorizontalAlignment="Center"
+                        Margin="0,0,0,18">
+                    <TextBlock Text="&#xE73E;"
+                               FontFamily="Segoe MDL2 Assets" FontSize="28"
+                               Foreground="#059669"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+                </Border>
+
+                <!-- Título -->
+                <TextBlock x:Name="TxtTitulo"
+                           FontFamily="Segoe UI" FontSize="18" FontWeight="Bold"
+                           Foreground="#111827"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,8"/>
+
+                <!-- Mensaje -->
+                <TextBlock x:Name="TxtMensaje"
+                           FontFamily="Segoe UI" FontSize="13"
+                           Foreground="#6B7280"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,28"/>
+
+                <!-- Botón Aceptar -->
+                <Button Style="{StaticResource ActionButton}"
+                        Background="#059669" Foreground="White"
+                        Content="Aceptar"
+                        Click="BtnAceptar_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

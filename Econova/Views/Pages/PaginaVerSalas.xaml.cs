@@ -24,9 +24,13 @@ namespace Econova.Views.Pages
                 var vm = DataContext as PaginaVerSalasViewModel;
                 vm?.AgregarNuevaSala(ventana.NombreSala, ventana.CapacidadSala);
 
-                new WpfDialogService().Informar(
-                    "Sala agregada exitosamente.",
-                    "Registro exitoso");
+                var confirmacion = new VentanaConfirmacionExito(
+                    "La sala ha sido agregada exitosamente.",
+                    "Registro exitoso")
+                {
+                    Owner = Window.GetWindow(this)
+                };
+                confirmacion.ShowDialog();
             }
         }
     }

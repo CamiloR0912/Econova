@@ -63,12 +63,7 @@ namespace Econova.ViewModels
                 var s = _todasSalas.FirstOrDefault(x => x.Id == id);
                 if (s == null) return;
 
-                bool confirmado = _dialogService.Confirmar(
-                    $"¿Estás seguro de que deseas eliminar esta sala?\n\n" +
-                    $"  Nombre:      {s.Nombre}\n" +
-                    $"  Capacidad:   {s.Capacidad} personas\n\n" +
-                    $"Esta acción no se puede deshacer.",
-                    "Confirmar eliminación");
+                bool confirmado = _dialogService.ConfirmarEliminarSala(s.Nombre, s.Capacidad);
 
                 if (confirmado)
                 {
@@ -78,10 +73,6 @@ namespace Econova.ViewModels
                         _todasSalas[i].Numero = i + 1;
 
                     Filtrar();
-
-                    _dialogService.Informar(
-                        "Sala eliminada exitosamente.",
-                        "Eliminación confirmada");
                 }
             }
         }

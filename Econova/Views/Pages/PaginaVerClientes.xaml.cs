@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using Econova.ViewModels;
 using Econova.Models;
 using Econova.Views.Windows;
-using Econova.Views.Services; // 👈
+using Econova.Views.Services;
 
 namespace Econova.Views.Pages
 {
@@ -13,12 +13,13 @@ namespace Econova.Views.Pages
         public PaginaVerClientes()
         {
             InitializeComponent();
-            DataContext = new PaginaVerClientesViewModel(new WpfDialogService()); // 👈
+            DataContext = new PaginaVerClientesViewModel(new WpfDialogService());
         }
 
         private void BtnNuevoCliente_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new PaginaCrearCliente());
+            var main = Window.GetWindow(this) as MainWindow;
+            main?.NavigarACrearCliente();
         }
 
         private void BtnEditar_Click(object sender, RoutedEventArgs e)
@@ -33,10 +34,13 @@ namespace Econova.Views.Pages
 
             if (ventana.ShowDialog() == true)
             {
-                new WpfDialogService().Informar(
-                    "Cliente actualizado exitosamente.",
-                    "Actualización exitosa");
+                var confirmacion = new ConfirmacionClienteWindow(
+                    c.NombreCompleto, c.Cedula, c.Telefono, c.Email, c.Direccion)
+                {
+                    Owner = Window.GetWindow(this)
+                };
+                confirmacion.ShowDialog();
             }
         }
     }
-}
+}

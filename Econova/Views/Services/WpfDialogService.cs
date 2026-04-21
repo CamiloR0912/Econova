@@ -1,4 +1,5 @@
-﻿using Econova.Services;
+using Econova.Models;
+using Econova.Services;
 using Econova.Views.Dialogs;
 using Econova.Views.Windows;
 using System.Windows;
@@ -30,7 +31,7 @@ namespace Econova.Views.Services
             return ventana.Confirmado;
         }
 
-        public void MostrarReservaExitosa(string sala, string fechas, string cliente) // 👈 nuevo
+        public void MostrarReservaExitosa(string sala, string fechas, string cliente)
         {
             var ventana = new ReservaExitosaWindow(sala, fechas, cliente)
             {
@@ -38,5 +39,43 @@ namespace Econova.Views.Services
             };
             ventana.ShowDialog();
         }
+
+        public bool ConfirmarEliminarReserva(string sala, string cliente, string cedula, string entrada)
+        {
+            var ventana = new ConfirmacionEliminarReservaWindow(sala, cliente, cedula, entrada)
+            {
+                Owner = Application.Current.MainWindow
+            };
+            ventana.ShowDialog();
+            return ventana.Confirmado;
+        }
+
+        public bool EditarReserva(Reserva reserva)
+        {
+            var ventana = new VentanaEditarReserva(reserva)
+            {
+                Owner = Application.Current.MainWindow
+            };
+            return ventana.ShowDialog() == true;
+        }
+
+        public bool ConfirmarEliminarSala(string nombre, int capacidad)
+        {
+            var ventana = new ConfirmacionEliminarSalaWindow(nombre, capacidad)
+            {
+                Owner = Application.Current.MainWindow
+            };
+            ventana.ShowDialog();
+            return ventana.Confirmado;
+        }
+
+        public void MostrarConfirmacionExito(string mensaje, string titulo)
+        {
+            var ventana = new VentanaConfirmacionExito(mensaje, titulo)
+            {
+                Owner = Application.Current.MainWindow
+            };
+            ventana.ShowDialog();
+        }
     }
-}
+}

@@ -1,9 +1,9 @@
-<Window x:Class="Econova.Views.Windows.VentanaAgregarSala"
+<Window x:Class="Econova.Views.Windows.VentanaEditarReserva"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:Econova.ViewModels"
-        Title="Agregar sala"
-        Width="400"
+        Title="Editar reserva"
+        Width="420"
         SizeToContent="Height"
         WindowStartupLocation="CenterOwner"
         WindowStyle="None"
@@ -34,10 +34,10 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal"
                                 VerticalAlignment="Center" Margin="18,0,0,0">
-                        <TextBlock Text="&#xE710;" FontFamily="Segoe MDL2 Assets"
+                        <TextBlock Text="&#xE70F;" FontFamily="Segoe MDL2 Assets"
                                    FontSize="14" Foreground="#2563EB"
                                    Margin="0,0,10,0" VerticalAlignment="Center"/>
-                        <TextBlock Text="Agregar sala"
+                        <TextBlock Text="Editar reserva"
                                    FontFamily="Segoe UI" FontSize="14"
                                    FontWeight="SemiBold" Foreground="#000000"
                                    VerticalAlignment="Center"/>
@@ -72,31 +72,101 @@
             <StackPanel Grid.Row="1" Margin="24,20,24,24">
 
                 <StackPanel Margin="0,0,0,14">
-                    <TextBlock Text="Nombre de la sala" FontFamily="Segoe UI"
+                    <TextBlock Text="Sala" FontFamily="Segoe UI"
                                FontSize="12" FontWeight="SemiBold"
                                Foreground="#000000" Margin="0,0,0,6"/>
-                    <TextBox x:Name="TxtNombre" Height="38"
-                             Text="{Binding Nombre, UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Height="38"
+                             Text="{Binding Sala, UpdateSourceTrigger=PropertyChanged}"
                              FontFamily="Segoe UI" FontSize="13"
                              Padding="10,0" VerticalContentAlignment="Center"
                              BorderBrush="#D1D5DB" BorderThickness="1"/>
                 </StackPanel>
 
-                <StackPanel Margin="0,0,0,14">
-                    <TextBlock Text="Capacidad" FontFamily="Segoe UI"
-                               FontSize="12" FontWeight="SemiBold"
-                               Foreground="#000000" Margin="0,0,0,6"/>
-                    <TextBox x:Name="TxtCapacidad" Height="38"
-                             Text="{Binding Capacidad, UpdateSourceTrigger=PropertyChanged}"
-                             FontFamily="Segoe UI" FontSize="13"
-                             Padding="10,0" VerticalContentAlignment="Center"
-                             BorderBrush="#D1D5DB" BorderThickness="1"/>
-                </StackPanel>
+                <Grid Margin="0,0,0,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Cliente" FontFamily="Segoe UI"
+                                   FontSize="12" FontWeight="SemiBold"
+                                   Foreground="#000000" Margin="0,0,0,6"/>
+                        <TextBox Height="38"
+                                 Text="{Binding Cliente, UpdateSourceTrigger=PropertyChanged}"
+                                 FontFamily="Segoe UI" FontSize="13"
+                                 Padding="10,0" VerticalContentAlignment="Center"
+                                 BorderBrush="#D1D5DB" BorderThickness="1"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Cédula" FontFamily="Segoe UI"
+                                   FontSize="12" FontWeight="SemiBold"
+                                   Foreground="#000000" Margin="0,0,0,6"/>
+                        <TextBox Height="38"
+                                 Text="{Binding Cedula}"
+                                 FontFamily="Segoe UI" FontSize="13"
+                                 Padding="10,0" VerticalContentAlignment="Center"
+                                 BorderBrush="#D1D5DB" BorderThickness="1"
+                                 IsReadOnly="True" Background="#F9FAFB"
+                                 Foreground="#6B7280"/>
+                    </StackPanel>
+                </Grid>
 
-                <TextBlock Text="{Binding MensajeError}" Foreground="#DC2626"
-                           FontSize="12" Margin="0,0,0,14"
-                           HorizontalAlignment="Center"
-                           TextWrapping="Wrap"/>
+                <Grid Margin="0,0,0,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Fecha entrada" FontFamily="Segoe UI"
+                                   FontSize="12" FontWeight="SemiBold"
+                                   Foreground="#000000" Margin="0,0,0,6"/>
+                        <TextBox Height="38"
+                                 Text="{Binding FechaEntrada, UpdateSourceTrigger=PropertyChanged}"
+                                 FontFamily="Segoe UI" FontSize="13"
+                                 Padding="10,0" VerticalContentAlignment="Center"
+                                 BorderBrush="#D1D5DB" BorderThickness="1"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Hora entrada" FontFamily="Segoe UI"
+                                   FontSize="12" FontWeight="SemiBold"
+                                   Foreground="#000000" Margin="0,0,0,6"/>
+                        <TextBox Height="38"
+                                 Text="{Binding HoraEntrada, UpdateSourceTrigger=PropertyChanged}"
+                                 FontFamily="Segoe UI" FontSize="13"
+                                 Padding="10,0" VerticalContentAlignment="Center"
+                                 BorderBrush="#D1D5DB" BorderThickness="1"/>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="0,0,0,24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Fecha salida" FontFamily="Segoe UI"
+                                   FontSize="12" FontWeight="SemiBold"
+                                   Foreground="#000000" Margin="0,0,0,6"/>
+                        <TextBox Height="38"
+                                 Text="{Binding FechaSalida, UpdateSourceTrigger=PropertyChanged}"
+                                 FontFamily="Segoe UI" FontSize="13"
+                                 Padding="10,0" VerticalContentAlignment="Center"
+                                 BorderBrush="#D1D5DB" BorderThickness="1"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Hora salida" FontFamily="Segoe UI"
+                                   FontSize="12" FontWeight="SemiBold"
+                                   Foreground="#000000" Margin="0,0,0,6"/>
+                        <TextBox Height="38"
+                                 Text="{Binding HoraSalida, UpdateSourceTrigger=PropertyChanged}"
+                                 FontFamily="Segoe UI" FontSize="13"
+                                 Padding="10,0" VerticalContentAlignment="Center"
+                                 BorderBrush="#D1D5DB" BorderThickness="1"/>
+                    </StackPanel>
+                </Grid>
 
                 <Rectangle Height="1" Fill="#E5E7EB" Margin="0,0,0,20"/>
 
@@ -130,7 +200,7 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <Button Grid.Column="2" Content="Guardar sala"
+                    <Button Grid.Column="2" Content="Guardar cambios"
                             Height="40" FontFamily="Segoe UI"
                             FontSize="13" FontWeight="SemiBold"
                             Background="#2563EB" Foreground="White"

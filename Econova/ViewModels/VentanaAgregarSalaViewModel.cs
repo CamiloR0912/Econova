@@ -56,7 +56,6 @@ namespace Econova.ViewModels
             }
 
             SalaGuardada?.Invoke(Nombre, Capacidad);
-            Cerrar();
         }
 
         private void Cerrar()
