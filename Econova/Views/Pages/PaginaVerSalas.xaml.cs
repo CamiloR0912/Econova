@@ -22,15 +22,17 @@ namespace Econova.Views.Pages
             if (ventana.ShowDialog() == true)
             {
                 var vm = DataContext as PaginaVerSalasViewModel;
-                vm?.AgregarNuevaSala(ventana.NombreSala, ventana.CapacidadSala);
-
-                var confirmacion = new VentanaConfirmacionExito(
-                    "La sala ha sido agregada exitosamente.",
-                    "Registro exitoso")
+                bool guardada = vm?.AgregarNuevaSala(ventana.NombreSala, ventana.CapacidadSala) == true;
+                if (guardada)
                 {
-                    Owner = Window.GetWindow(this)
-                };
-                confirmacion.ShowDialog();
+                    var confirmacion = new VentanaConfirmacionExito(
+                        "La sala ha sido agregada exitosamente.",
+                        "Registro exitoso")
+                    {
+                        Owner = Window.GetWindow(this)
+                    };
+                    confirmacion.ShowDialog();
+                }
             }
         }
     }

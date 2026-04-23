@@ -109,7 +109,7 @@
                                        Margin="0,0,8,0" VerticalAlignment="Center"/>
                             <TextBlock x:Name="TxtResumenSala"
                                        Grid.Column="1"
-                                       Text="Sala 1 — Capacidad 10 personas"
+                                       Text="Sin sala seleccionada"
                                        FontFamily="Segoe UI" FontSize="12"
                                        Foreground="#374151"
                                        FontWeight="SemiBold"/>
@@ -125,7 +125,7 @@
                                        Margin="0,0,8,0" VerticalAlignment="Center"/>
                             <TextBlock x:Name="TxtResumenFechas"
                                        Grid.Column="1"
-                                       Text="19/04/2026, 08:00 AM → 05:00 PM"
+                                       Text="Sin fechas seleccionadas"
                                        FontFamily="Segoe UI" FontSize="12"
                                        Foreground="#374151"/>
                         </Grid>
@@ -140,7 +140,7 @@
                                        Margin="0,0,8,0" VerticalAlignment="Center"/>
                             <TextBlock x:Name="TxtResumenCliente"
                                        Grid.Column="1"
-                                       Text="Juan Pérez • 1234567890"
+                                       Text="Sin cliente asignado"
                                        FontFamily="Segoe UI" FontSize="12"
                                        Foreground="#374151"/>
                         </Grid>

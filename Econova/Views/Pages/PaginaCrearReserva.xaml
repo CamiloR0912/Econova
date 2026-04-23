@@ -5,6 +5,7 @@
       Background="White">
 
     <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <SolidColorBrush x:Key="AccentBrush"   Color="#2563EB"/>
         <SolidColorBrush x:Key="TextPrimary"   Color="#000000"/>
         <SolidColorBrush x:Key="TextSecondary" Color="#000000"/>
@@ -377,14 +378,11 @@
                     <!-- Sala -->
                     <TextBlock Text="Sala" Style="{StaticResource FieldLabel}"/>
                     <ComboBox x:Name="CmbSala"
+                              ItemsSource="{Binding SalasDisponibles}"
+                              SelectedItem="{Binding SalaSeleccionada, Mode=TwoWay}"
+                              DisplayMemberPath="NombreConCapacidad"
                               Style="{StaticResource ComboStyle}"
-                              Margin="0,0,0,20">
-                        <ComboBoxItem Content="Sala 1 — Capacidad 10 personas"/>
-                        <ComboBoxItem Content="Sala 2 — Capacidad 20 personas"/>
-                        <ComboBoxItem Content="Sala 3 — Capacidad 30 personas"/>
-                        <ComboBoxItem Content="Sala 4 — Capacidad 50 personas"/>
-                        <ComboBoxItem Content="Salón principal — Capacidad 100 personas"/>
-                    </ComboBox>
+                              Margin="0,0,0,20"/>
 
                     <!-- Fecha y hora de entrada -->
                     <TextBlock Text="Fecha y hora de entrada"
@@ -523,9 +521,31 @@
                                 Command="{Binding BuscarClienteCommand}"/>
                     </Grid>
 
+                    <Border Visibility="{Binding MostrarSugerenciasCedula, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Background="White"
+                            BorderBrush="#E5E7EB"
+                            BorderThickness="1"
+                            CornerRadius="7"
+                            Margin="0,0,0,12">
+                        <ListBox ItemsSource="{Binding CedulasSugeridas}"
+                                 SelectedItem="{Binding CedulaSugeridaSeleccionada, Mode=TwoWay}"
+                                 MaxHeight="140"
+                                 BorderThickness="0"
+                                 Background="Transparent"
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="Padding" Value="10,8"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Cursor" Value="Hand"/>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                        </ListBox>
+                    </Border>
+
                     <!-- Panel resultado cliente -->
                     <Border x:Name="PanelCliente"
-                            Visibility="{Binding PanelClienteVisibility}"
+                            Visibility="{Binding PanelClienteVisible, Converter={StaticResource BoolToVisibilityConverter}}"
                             Background="#F0FDF4"
                             BorderBrush="#BBF7D0"
                             BorderThickness="1"
@@ -560,7 +580,7 @@
                     <!-- Botón confirmar -->
                     <Button Content="Confirmar Reserva"
                             Style="{StaticResource ConfirmButtonStyle}"
-                            Command="{Binding ConfirmarReservaCommand}"/>
+                            Click="BtnConfirmarReserva_Click"/>
 
                 </StackPanel>
             </Border>

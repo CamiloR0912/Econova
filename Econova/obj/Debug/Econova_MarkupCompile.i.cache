@@ -11,9 +11,9 @@ false
 DEBUG;TRACE
 D:\Universidad\Septimo\software\Econova\Econova\App.xaml
 19-924493464
-
-40-1330663350
-13-38814620
+41195115559
+42353566831
+23470928737
 Views\Pages\PaginaCrearReserva.xaml;Views\Pages\PaginaVerSalas.xaml;Views\Windows\ConfirmacionClienteWindow.xaml;Views\Windows\ConfirmacionEliminarClienteWindow.xaml;Views\Windows\ConfirmacionReservaWindow.xaml;Views\Windows\MainWindow.xaml;Views\Pages\PaginaCrearCliente.xaml;Views\Pages\PaginaInicio.xaml;Views\Pages\PaginaVerClientes.xaml;Views\Pages\PaginaVerReservas.xaml;Views\Windows\ReservaExitosaWindow.xaml;Views\Windows\VentanaAgregarSalas.xaml;Views\Windows\VentanaConfirmarSalir.xaml;Views\Windows\VentanaEditarCliente.xaml;Views\Windows\VentanaDetalleReserva.xaml;Views\Windows\VentanaEditarReserva.xaml;Views\Windows\ConfirmacionEliminarReservaWindow.xaml;Views\Windows\ConfirmacionEliminarSalaWindow.xaml;Views\Windows\VentanaConfirmacionExito.xaml;
 
 False

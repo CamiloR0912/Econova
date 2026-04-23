@@ -1,0 +1,26 @@
+-- SQLite schema for Econova
+CREATE TABLE IF NOT EXISTS Clientes (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Nombres TEXT NOT NULL,
+    Apellidos TEXT NOT NULL,
+    Cedula TEXT NOT NULL UNIQUE,
+    Email TEXT,
+    Telefono TEXT,
+    Direccion TEXT
+);
+
+CREATE TABLE IF NOT EXISTS Salas (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Nombre TEXT NOT NULL,
+    Capacidad INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Reservas (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    SalaId INTEGER NOT NULL,
+    ClienteId INTEGER NOT NULL,
+    FechaEntrada TEXT NOT NULL,
+    FechaSalida TEXT NOT NULL,
+    FOREIGN KEY (SalaId) REFERENCES Salas(Id),
+    FOREIGN KEY (ClienteId) REFERENCES Clientes(Id)
+);

@@ -1,6 +1,9 @@
 using Econova.Core;
+using Econova.Infrastructure;
+using Econova.Models;
 using Econova.Services;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace Econova.ViewModels
@@ -8,6 +11,7 @@ namespace Econova.ViewModels
     public class PaginaCrearReservaViewModel : ObservableObject
     {
         private readonly IDialogService _dialogService;
+        private readonly SqliteDataService _db = SqliteDataService.Instance;
 
         private string _cedula;
         private string _nombreCliente;
@@ -15,29 +19,23 @@ namespace Econova.ViewModels
         private bool _panelClienteVisible = false;
         private string _amPmEntrada = "AM";
         private string _amPmSalida = "AM";
+        private ObservableCollection<string> _cedulasSugeridas = new ObservableCollection<string>();
+        private ObservableCollection<Sala> _salasDisponibles = new ObservableCollection<Sala>();
+        private bool _mostrarSugerenciasCedula;
+        private string _cedulaSugeridaSeleccionada;
+        private Sala _salaSeleccionada;
         public Action NavegaAlInicio { get; set; }
-
-        private void ConfirmarReserva()
-        {
-            var sala = "Sala seleccionada";
-            var fechas = "Fechas seleccionadas";
-            var cliente = PanelClienteVisible
-                ? $"{NombreCliente} • {Cedula}"
-                : "Sin cliente asignado";
-
-            bool confirmado = _dialogService.ConfirmarReserva(sala, fechas, cliente);
-
-            if (confirmado)
-            {
-                _dialogService.MostrarReservaExitosa(sala, fechas, cliente);
-                NavegaAlInicio?.Invoke();
-            }
-        }
 
         public string Cedula
         {
             get => _cedula;
-            set => SetProperty(ref _cedula, value);
+            set
+            {
+                if (SetProperty(ref _cedula, value))
+                {
+                    ActualizarSugerenciasCedula();
+                }
+            }
         }
 
         public string NombreCliente
@@ -71,6 +69,45 @@ namespace Econova.ViewModels
             set => SetProperty(ref _amPmSalida, value);
         }
 
+        public ObservableCollection<string> CedulasSugeridas
+        {
+            get => _cedulasSugeridas;
+            set => SetProperty(ref _cedulasSugeridas, value);
+        }
+
+        public bool MostrarSugerenciasCedula
+        {
+            get => _mostrarSugerenciasCedula;
+            set => SetProperty(ref _mostrarSugerenciasCedula, value);
+        }
+
+        public ObservableCollection<Sala> SalasDisponibles
+        {
+            get => _salasDisponibles;
+            set => SetProperty(ref _salasDisponibles, value);
+        }
+
+        public Sala SalaSeleccionada
+        {
+            get => _salaSeleccionada;
+            set => SetProperty(ref _salaSeleccionada, value);
+        }
+
+        public string CedulaSugeridaSeleccionada
+        {
+            get => _cedulaSugeridaSeleccionada;
+            set
+            {
+                if (SetProperty(ref _cedulaSugeridaSeleccionada, value) &&
+                    !string.IsNullOrWhiteSpace(value))
+                {
+                    Cedula = value;
+                    OcultarSugerenciasCedula();
+                    BuscarCliente(false);
+                }
+            }
+        }
+
         public ICommand BuscarClienteCommand { get; }
         public ICommand ToggleAmPmEntradaCommand { get; }
         public ICommand ToggleAmPmSalidaCommand { get; }
@@ -82,10 +119,16 @@ namespace Econova.ViewModels
             BuscarClienteCommand = new RelayCommand(o => BuscarCliente());
             ToggleAmPmEntradaCommand = new RelayCommand(o => AmPmEntrada = AmPmEntrada == "AM" ? "PM" : "AM");
             ToggleAmPmSalidaCommand = new RelayCommand(o => AmPmSalida = AmPmSalida == "AM" ? "PM" : "AM");
-            ConfirmarReservaCommand = new RelayCommand(o => ConfirmarReserva());
+            ConfirmarReservaCommand = new RelayCommand(o => { });
+            CargarDatos();
         }
 
-        private void BuscarCliente()
+        private void CargarDatos()
+        {
+            SalasDisponibles = new ObservableCollection<Sala>(_db.ObtenerSalas());
+        }
+
+        private void BuscarCliente(bool mostrarDialogoSiNoExiste = true)
         {
             if (string.IsNullOrEmpty(Cedula))
             {
@@ -93,19 +136,85 @@ namespace Econova.ViewModels
                 return;
             }
 
-            // Simulación de búsqueda — reemplazar con consulta real a BD
-            if (Cedula == "1234567890")
+            var clienteEncontrado = _db.BuscarClientePorCedula(Cedula);
+            if (clienteEncontrado != null)
             {
-                NombreCliente = "Juan Pérez";
-                InfoCliente = $"{Cedula} • 310 000 0000";
+                NombreCliente = clienteEncontrado.NombreCompleto;
+                InfoCliente = $"{clienteEncontrado.Cedula} • {clienteEncontrado.Telefono}";
                 PanelClienteVisible = true;
             }
             else
             {
                 PanelClienteVisible = false;
-                _dialogService.Informar(
-                    $"No se encontró ningún cliente con la cédula {Cedula}.",
-                    "Cliente no encontrado");
+                if (mostrarDialogoSiNoExiste)
+                {
+                    _dialogService.Informar(
+                        $"No se encontró ningún cliente con la cédula {Cedula}.",
+                        "Cliente no encontrado");
+                }
+            }
+
+            OcultarSugerenciasCedula();
+        }
+
+        private void ActualizarSugerenciasCedula()
+        {
+            CedulaSugeridaSeleccionada = null;
+
+            if (string.IsNullOrWhiteSpace(Cedula))
+            {
+                OcultarSugerenciasCedula();
+                return;
+            }
+
+            var coincidencias = _db.ObtenerCedulasPorPrefijo(Cedula, 8);
+
+            CedulasSugeridas = new ObservableCollection<string>(coincidencias);
+            MostrarSugerenciasCedula = coincidencias.Count > 0;
+        }
+
+        private void OcultarSugerenciasCedula()
+        {
+            CedulasSugeridas = new ObservableCollection<string>();
+            MostrarSugerenciasCedula = false;
+        }
+
+        public void ConfirmarReserva(DateTime fechaEntrada, DateTime fechaSalida)
+        {
+            if (SalaSeleccionada == null)
+            {
+                _dialogService.Informar("Selecciona una sala para crear la reserva.", "Campo requerido");
+                return;
+            }
+
+            var cliente = _db.BuscarClientePorCedula(Cedula);
+            if (cliente == null)
+            {
+                _dialogService.Informar("Debes seleccionar un cliente válido.", "Cliente requerido");
+                return;
+            }
+
+            if (fechaSalida <= fechaEntrada)
+            {
+                _dialogService.Informar("La fecha y hora de salida deben ser posteriores a la entrada.", "Fechas inválidas");
+                return;
+            }
+
+            string salaTexto = SalaSeleccionada.NombreConCapacidad;
+            string fechasTexto = $"{fechaEntrada:dd/MM/yyyy hh:mm tt} -> {fechaSalida:dd/MM/yyyy hh:mm tt}";
+            string clienteTexto = $"{cliente.NombreCompleto} • {cliente.Cedula}";
+
+            bool confirmado = _dialogService.ConfirmarReserva(salaTexto, fechasTexto, clienteTexto);
+            if (!confirmado) return;
+
+            if (_db.AgregarReserva(SalaSeleccionada.Id, cliente.Id, fechaEntrada, fechaSalida, out string error))
+            {
+                _dialogService.MostrarReservaExitosa(salaTexto, fechasTexto, clienteTexto);
+                NavegaAlInicio?.Invoke();
+            }
+            else
+            {
+                _dialogService.Informar($"No se pudo guardar la reserva.\n{error}", "Error de guardado");
             }
         }
 

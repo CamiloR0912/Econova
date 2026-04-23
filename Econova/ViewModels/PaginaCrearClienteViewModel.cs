@@ -2,12 +2,15 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using Econova.Core;
+using Econova.Infrastructure;
+using Econova.Models;
 using System.Windows.Navigation;
 
 namespace Econova.ViewModels
 {
     public class PaginaCrearClienteViewModel : ObservableObject
     {
+        private readonly SqliteDataService _db = SqliteDataService.Instance;
         private string _nombres;
         private string _apellidos;
         private string _cedula;
@@ -121,9 +124,27 @@ namespace Econova.ViewModels
 
             if (ventana.Confirmado)
             {
-                // ── Aquí guardarás el cliente en tu base de datos ──
+                var cliente = new Cliente
+                {
+                    Nombres = Nombres.Trim(),
+                    Apellidos = Apellidos.Trim(),
+                    Cedula = Cedula.Trim(),
+                    Telefono = Telefono.Trim(),
+                    Email = Email.Trim(),
+                    Direccion = Direccion.Trim()
+                };
 
-                Limpiar(); // 👈 deja los campos en blanco
+                if (_db.AgregarCliente(cliente, out string error))
+                {
+                    Limpiar();
+                    MessageBox.Show("Cliente guardado correctamente.",
+                        "Registro exitoso", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show($"No se pudo guardar el cliente.\n{error}",
+                        "Error de guardado", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
     }

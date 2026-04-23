@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Econova.Core;
+using Econova.Infrastructure;
 using Econova.Models;
 using Econova.Services;
 
@@ -11,6 +12,7 @@ namespace Econova.ViewModels
     public class PaginaVerSalasViewModel : ObservableObject
     {
         private readonly IDialogService _dialogService;
+        private readonly SqliteDataService _db = SqliteDataService.Instance;
         private List<Sala> _todasSalas = new List<Sala>();
         private ObservableCollection<Sala> _salasFiltradas;
         private string _textoBusqueda;
@@ -53,7 +55,7 @@ namespace Econova.ViewModels
         {
             _dialogService = dialogService;
             EliminarCommand = new RelayCommand(o => Eliminar(o));
-            CargarSalasEjemplo();
+            CargarSalas();
         }
 
         private void Eliminar(object parameter)
@@ -67,30 +69,15 @@ namespace Econova.ViewModels
 
                 if (confirmado)
                 {
-                    _todasSalas.Remove(s);
-
-                    for (int i = 0; i < _todasSalas.Count; i++)
-                        _todasSalas[i].Numero = i + 1;
-
-                    Filtrar();
+                    _db.EliminarSala(s.Id);
+                    CargarSalas();
                 }
             }
         }
 
-        private void CargarSalasEjemplo()
+        private void CargarSalas()
         {
-            _todasSalas = new List<Sala>
-            {
-                new Sala { Id=1, Nombre="Sala A", Capacidad=20 },
-                new Sala { Id=2, Nombre="Sala B", Capacidad=15 },
-                new Sala { Id=3, Nombre="Sala C", Capacidad=30 },
-                new Sala { Id=4, Nombre="Auditorio", Capacidad=100 },
-                new Sala { Id=5, Nombre="Sala de Juntas", Capacidad=10 },
-            };
-
-            for (int i = 0; i < _todasSalas.Count; i++)
-                _todasSalas[i].Numero = i + 1;
-
+            _todasSalas = _db.ObtenerSalas();
             Filtrar();
         }
 
@@ -106,19 +93,16 @@ namespace Econova.ViewModels
             SubtituloTexto = "Gestión y administración de los espacios disponibles";
         }
 
-        public void AgregarNuevaSala(string nombre, int capacidad)
+        public bool AgregarNuevaSala(string nombre, int capacidad)
         {
-            int nuevoId = _todasSalas.Any() ? _todasSalas.Max(s => s.Id) + 1 : 1;
-            var nuevaSala = new Sala
+            if (_db.AgregarSala(nombre, capacidad, out string error))
             {
-                Id = nuevoId,
-                Nombre = nombre,
-                Capacidad = capacidad,
-                Numero = _todasSalas.Count + 1
-            };
-
-            _todasSalas.Add(nuevaSala);
-            Filtrar();
+                CargarSalas();
+                return true;
+            }
+            
+            _dialogService.Informar($"No se pudo guardar la sala.\n{error}", "Error de guardado");
+            return false;
         }
     }
 }

@@ -9,5 +9,6 @@ namespace Econova.Models
         public string Nombre { get; set; }
         public int Capacidad { get; set; }
         public string Inicial => !string.IsNullOrEmpty(Nombre) ? Nombre[0].ToString().ToUpper() : "?";
+        public string NombreConCapacidad => $"{Nombre} - Capacidad {Capacidad} personas";
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Econova.Core;
+using Econova.Infrastructure;
 using Econova.Models;
 using Econova.Services;
 
@@ -11,6 +12,7 @@ namespace Econova.ViewModels
     public class PaginaVerClientesViewModel : ObservableObject
     {
         private readonly IDialogService _dialogService;
+        private readonly SqliteDataService _db = SqliteDataService.Instance;
         private List<Cliente> _todosClientes = new List<Cliente>();
         private ObservableCollection<Cliente> _clientesFiltrados;
         private string _textoBusqueda;
@@ -53,7 +55,7 @@ namespace Econova.ViewModels
         {
             _dialogService = dialogService;
             EliminarCommand = new RelayCommand(o => Eliminar(o));
-            CargarClientesEjemplo();
+            CargarClientes();
         }
 
         private void Eliminar(object parameter)
@@ -72,32 +74,16 @@ namespace Econova.ViewModels
 
                 if (ventana.Confirmado)
                 {
-                    _todosClientes.Remove(c);
-
-                    for (int i = 0; i < _todosClientes.Count; i++)
-                        _todosClientes[i].Numero = i + 1;
-
-                    Filtrar();
+                    _db.EliminarCliente(c.Id);
+                    CargarClientes();
                 }
             }
         }
 
-        private void CargarClientesEjemplo()
+        private void CargarClientes()
         {
-            _todosClientes = new List<Cliente>
-            {
-                new Cliente { Id=1, Nombres="Juan",   Apellidos="Pérez",  Cedula="1234567890", Email="juan@email.com",   Telefono="3101234567", Direccion="Calle 1 # 2-3" },
-                new Cliente { Id=2, Nombres="María",  Apellidos="López",  Cedula="0987654321", Email="maria@email.com",  Telefono="3207654321", Direccion="Carrera 4 # 5-6" },
-                new Cliente { Id=3, Nombres="Carlos", Apellidos="Ruiz",   Cedula="1122334455", Email="carlos@email.com", Telefono="3151122334", Direccion="Av 7 # 8-9" },
-                new Cliente { Id=4, Nombres="Ana",    Apellidos="Torres", Cedula="5566778899", Email="ana@email.com",    Telefono="3005566778", Direccion="Calle 10 # 11-12" },
-                new Cliente { Id=5, Nombres="Luis",   Apellidos="Gómez",  Cedula="9988776655", Email="luis@email.com",   Telefono="3119988776", Direccion="Carrera 13 # 14-15" },
-            };
-
-            for (int i = 0; i < _todosClientes.Count; i++)
-                _todosClientes[i].Numero = i + 1;
-
-            ClientesFiltrados = new ObservableCollection<Cliente>(_todosClientes);
-            ActualizarTextos();
+            _todosClientes = _db.ObtenerClientes();
+            Filtrar();
         }
 
         private void Filtrar()

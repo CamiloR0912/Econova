@@ -24,9 +24,20 @@ C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Views\Windows\Ventana
 C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\App.g.cs
 C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Econova_MarkupCompile.cache
 C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Econova_MarkupCompile.lref
+D:\Universidad\Septimo\software\Econova\Econova\bin\Debug\runtimes\win-x86\native\e_sqlite3.dll
+D:\Universidad\Septimo\software\Econova\Econova\bin\Debug\runtimes\win-x64\native\e_sqlite3.dll
+D:\Universidad\Septimo\software\Econova\Econova\bin\Debug\runtimes\win-arm\native\e_sqlite3.dll
 D:\Universidad\Septimo\software\Econova\Econova\bin\Debug\Econova.exe.config
 D:\Universidad\Septimo\software\Econova\Econova\bin\Debug\Econova.exe
 D:\Universidad\Septimo\software\Econova\Econova\bin\Debug\Econova.pdb
+D:\Universidad\Septimo\software\Econova\Econova\bin\Debug\Microsoft.Data.Sqlite.dll
+D:\Universidad\Septimo\software\Econova\Econova\bin\Debug\SQLitePCLRaw.batteries_v2.dll
+D:\Universidad\Septimo\software\Econova\Econova\bin\Debug\SQLitePCLRaw.core.dll
+D:\Universidad\Septimo\software\Econova\Econova\bin\Debug\SQLitePCLRaw.provider.dynamic_cdecl.dll
+D:\Universidad\Septimo\software\Econova\Econova\bin\Debug\System.Buffers.dll
+D:\Universidad\Septimo\software\Econova\Econova\bin\Debug\System.Memory.dll
+D:\Universidad\Septimo\software\Econova\Econova\bin\Debug\System.Numerics.Vectors.dll
+D:\Universidad\Septimo\software\Econova\Econova\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Econova.csproj.AssemblyReference.cache
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Windows\ConfirmacionClienteWindow.baml
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Windows\ConfirmacionEliminarClienteWindow.baml
@@ -58,6 +69,7 @@ D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Windows\Confirma
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Windows\ConfirmacionEliminarSalaWindow.g.cs
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Windows\VentanaConfirmacionExito.g.cs
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\App.g.cs
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Econova_Content.g.cs
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Econova_MarkupCompile.cache
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Econova_MarkupCompile.lref
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Pages\PaginaCrearReserva.baml
@@ -73,5 +85,6 @@ D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Econova.g.resources
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Econova.Properties.Resources.resources
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Econova.csproj.GenerateResource.cache
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Econova.csproj.CoreCompileInputs.cache
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Econova.csproj.Up2Date
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Econova.exe
 D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Econova.pdb

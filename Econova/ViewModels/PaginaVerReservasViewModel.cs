@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Econova.Core;
+using Econova.Infrastructure;
 using Econova.Models;
 using Econova.Services;
 
@@ -12,6 +13,7 @@ namespace Econova.ViewModels
     public class PaginaVerReservasViewModel : ObservableObject
     {
         private readonly IDialogService _dialogService;
+        private readonly SqliteDataService _db = SqliteDataService.Instance;
 
         private DateTime _diaActual = DateTime.Today;
         private List<Reserva> _todasReservas = new List<Reserva>();
@@ -115,7 +117,7 @@ namespace Econova.ViewModels
             DiaSiguienteCommand = new RelayCommand(o => DiaActual = DiaActual.AddDays(1));
             HoyCommand = new RelayCommand(o => DiaActual = DateTime.Today);
 
-            CargarReservasEjemplo();
+            CargarReservas();
             Filtrar();
             ActualizarDia();
         }
@@ -150,7 +152,8 @@ namespace Econova.ViewModels
 
                 if (confirmado)
                 {
-                    _todasReservas.Remove(r);
+                    _db.EliminarReserva(r.Id);
+                    CargarReservas();
                     Filtrar();
                     ActualizarDia();
                 }
@@ -203,46 +206,9 @@ namespace Econova.ViewModels
             ActualizarTextos();
         }
 
-        private void CargarReservasEjemplo()
+        private void CargarReservas()
         {
-            _todasReservas = new List<Reserva>
-            {
-                new Reserva { Id=1, Numero=1, Sala="Sala 1", Cliente="Juan Pérez",
-                    Cedula="1234567890",
-                    FechaEntradaDt = DateTime.Today.AddHours(8),
-                    FechaSalidaDt  = DateTime.Today.AddHours(10),
-                    FechaEntrada   = DateTime.Today.ToString("dd/MM/yyyy"),
-                    HoraEntrada    = "08:00 AM",
-                    FechaSalida    = DateTime.Today.ToString("dd/MM/yyyy"),
-                    HoraSalida     = "10:00 AM" },
-
-                new Reserva { Id=2, Numero=2, Sala="Sala 2", Cliente="María López",
-                    Cedula="0987654321",
-                    FechaEntradaDt = DateTime.Today.AddHours(11),
-                    FechaSalidaDt  = DateTime.Today.AddHours(13),
-                    FechaEntrada   = DateTime.Today.ToString("dd/MM/yyyy"),
-                    HoraEntrada    = "11:00 AM",
-                    FechaSalida    = DateTime.Today.ToString("dd/MM/yyyy"),
-                    HoraSalida     = "01:00 PM" },
-
-                new Reserva { Id=3, Numero=3, Sala="Sala 3", Cliente="Carlos Ruiz",
-                    Cedula="1122334455",
-                    FechaEntradaDt = DateTime.Today.AddDays(1).AddHours(9),
-                    FechaSalidaDt  = DateTime.Today.AddDays(1).AddHours(12),
-                    FechaEntrada   = DateTime.Today.AddDays(1).ToString("dd/MM/yyyy"),
-                    HoraEntrada    = "09:00 AM",
-                    FechaSalida    = DateTime.Today.AddDays(1).ToString("dd/MM/yyyy"),
-                    HoraSalida     = "12:00 PM" },
-
-                new Reserva { Id=4, Numero=4, Sala="Salón principal", Cliente="Ana Torres",
-                    Cedula="5566778899",
-                    FechaEntradaDt = DateTime.Today.AddHours(14),
-                    FechaSalidaDt  = DateTime.Today.AddHours(17),
-                    FechaEntrada   = DateTime.Today.ToString("dd/MM/yyyy"),
-                    HoraEntrada    = "02:00 PM",
-                    FechaSalida    = DateTime.Today.ToString("dd/MM/yyyy"),
-                    HoraSalida     = "05:00 PM" },
-            };
+            _todasReservas = _db.ObtenerReservas();
         }
     }
 }
