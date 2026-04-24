@@ -86,7 +86,19 @@ namespace Econova.ViewModels
             _cliente.Email = Email;
             _cliente.Direccion = Direccion;
 
-            CloseRequest?.Invoke(true);
+            // Guardar en base de datos
+            var db = Econova.Infrastructure.SqliteDataService.Instance;
+            bool exito = db.ActualizarCliente(_cliente, out string error);
+
+            if (exito)
+            {
+                CloseRequest?.Invoke(true);
+            }
+            else
+            {
+                MessageBox.Show($"No se pudieron guardar los cambios.\n{error}",
+                    "Error al guardar", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

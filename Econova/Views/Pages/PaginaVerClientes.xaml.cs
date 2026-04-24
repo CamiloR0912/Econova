@@ -34,6 +34,8 @@ namespace Econova.Views.Pages
 
             if (ventana.ShowDialog() == true)
             {
+                vm.CargarClientes(); // ← agrega esta línea
+
                 var confirmacion = new ConfirmacionClienteWindow(
                     c.NombreCompleto, c.Cedula, c.Telefono, c.Email, c.Direccion)
                 {

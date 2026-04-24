@@ -80,7 +80,7 @@ namespace Econova.ViewModels
             }
         }
 
-        private void CargarClientes()
+        public void CargarClientes()
         {
             _todosClientes = _db.ObtenerClientes();
             Filtrar();

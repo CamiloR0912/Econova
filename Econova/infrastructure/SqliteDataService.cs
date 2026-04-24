@@ -30,33 +30,33 @@ namespace Econova.Infrastructure
                 connection.Open();
 
                 const string createClientes = @"
-CREATE TABLE IF NOT EXISTS Clientes (
-    Id INTEGER PRIMARY KEY AUTOINCREMENT,
-    Nombres TEXT NOT NULL,
-    Apellidos TEXT NOT NULL,
-    Cedula TEXT NOT NULL UNIQUE,
-    Email TEXT,
-    Telefono TEXT,
-    Direccion TEXT
-);";
+                CREATE TABLE IF NOT EXISTS Clientes (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Nombres TEXT NOT NULL,
+                    Apellidos TEXT NOT NULL,
+                    Cedula TEXT NOT NULL UNIQUE,
+                    Email TEXT,
+                    Telefono TEXT,
+                    Direccion TEXT
+                );";
 
                 const string createSalas = @"
-CREATE TABLE IF NOT EXISTS Salas (
-    Id INTEGER PRIMARY KEY AUTOINCREMENT,
-    Nombre TEXT NOT NULL UNIQUE,
-    Capacidad INTEGER NOT NULL
-);";
+                CREATE TABLE IF NOT EXISTS Salas (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Nombre TEXT NOT NULL UNIQUE,
+                    Capacidad INTEGER NOT NULL
+                );";
 
                 const string createReservas = @"
-CREATE TABLE IF NOT EXISTS Reservas (
-    Id INTEGER PRIMARY KEY AUTOINCREMENT,
-    SalaId INTEGER NOT NULL,
-    ClienteId INTEGER NOT NULL,
-    FechaEntrada TEXT NOT NULL,
-    FechaSalida TEXT NOT NULL,
-    FOREIGN KEY (SalaId) REFERENCES Salas(Id),
-    FOREIGN KEY (ClienteId) REFERENCES Clientes(Id)
-);";
+                CREATE TABLE IF NOT EXISTS Reservas (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    SalaId INTEGER NOT NULL,
+                    ClienteId INTEGER NOT NULL,
+                    FechaEntrada TEXT NOT NULL,
+                    FechaSalida TEXT NOT NULL,
+                    FOREIGN KEY (SalaId) REFERENCES Salas(Id),
+                    FOREIGN KEY (ClienteId) REFERENCES Clientes(Id)
+                    );";
 
                 using (var cmd = new SqliteCommand(createClientes, connection))
                     cmd.ExecuteNonQuery();
@@ -76,8 +76,8 @@ CREATE TABLE IF NOT EXISTS Reservas (
                 {
                     connection.Open();
                     const string sql = @"
-INSERT INTO Clientes (Nombres, Apellidos, Cedula, Email, Telefono, Direccion)
-VALUES (@Nombres, @Apellidos, @Cedula, @Email, @Telefono, @Direccion);";
+                    INSERT INTO Clientes (Nombres, Apellidos, Cedula, Email, Telefono, Direccion)
+                    VALUES (@Nombres, @Apellidos, @Cedula, @Email, @Telefono, @Direccion);";
 
                     using (var cmd = new SqliteCommand(sql, connection))
                     {
@@ -136,11 +136,33 @@ VALUES (@Nombres, @Apellidos, @Cedula, @Email, @Telefono, @Direccion);";
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
-                const string sql = "DELETE FROM Clientes WHERE Id = @Id;";
-                using (var cmd = new SqliteCommand(sql, connection))
+                using (var transaction = connection.BeginTransaction())
                 {
-                    cmd.Parameters.AddWithValue("@Id", id);
-                    return cmd.ExecuteNonQuery() > 0;
+                    try
+                    {
+                        // Primero eliminar las reservas del cliente
+                        const string eliminarReservas = "DELETE FROM Reservas WHERE ClienteId = @Id;";
+                        using (var cmd = new SqliteCommand(eliminarReservas, connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@Id", id);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        // Luego eliminar el cliente
+                        const string eliminarCliente = "DELETE FROM Clientes WHERE Id = @Id;";
+                        using (var cmd = new SqliteCommand(eliminarCliente, connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@Id", id);
+                            var filas = cmd.ExecuteNonQuery();
+                            transaction.Commit();
+                            return filas > 0;
+                        }
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        return false;
+                    }
                 }
             }
         }
@@ -256,11 +278,33 @@ VALUES (@Nombres, @Apellidos, @Cedula, @Email, @Telefono, @Direccion);";
             using (var connection = new SqliteConnection(_connectionString))
             {
                 connection.Open();
-                const string sql = "DELETE FROM Salas WHERE Id = @Id;";
-                using (var cmd = new SqliteCommand(sql, connection))
+                using (var transaction = connection.BeginTransaction())
                 {
-                    cmd.Parameters.AddWithValue("@Id", id);
-                    return cmd.ExecuteNonQuery() > 0;
+                    try
+                    {
+                        // Primero eliminar las reservas que usan esta sala
+                        const string eliminarReservas = "DELETE FROM Reservas WHERE SalaId = @Id;";
+                        using (var cmd = new SqliteCommand(eliminarReservas, connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@Id", id);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        // Luego eliminar la sala
+                        const string eliminarSala = "DELETE FROM Salas WHERE Id = @Id;";
+                        using (var cmd = new SqliteCommand(eliminarSala, connection, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@Id", id);
+                            var filas = cmd.ExecuteNonQuery();
+                            transaction.Commit();
+                            return filas > 0;
+                        }
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        return false;
+                    }
                 }
             }
         }
@@ -274,8 +318,8 @@ VALUES (@Nombres, @Apellidos, @Cedula, @Email, @Telefono, @Direccion);";
                 {
                     connection.Open();
                     const string sql = @"
-INSERT INTO Reservas (SalaId, ClienteId, FechaEntrada, FechaSalida)
-VALUES (@SalaId, @ClienteId, @FechaEntrada, @FechaSalida);";
+                    INSERT INTO Reservas (SalaId, ClienteId, FechaEntrada, FechaSalida)
+                    VALUES (@SalaId, @ClienteId, @FechaEntrada, @FechaSalida);";
 
                     using (var cmd = new SqliteCommand(sql, connection))
                     {
@@ -302,16 +346,16 @@ VALUES (@SalaId, @ClienteId, @FechaEntrada, @FechaSalida);";
             {
                 connection.Open();
                 const string sql = @"
-SELECT r.Id,
-       s.Nombre AS Sala,
-       c.Nombres || ' ' || c.Apellidos AS Cliente,
-       c.Cedula AS Cedula,
-       r.FechaEntrada,
-       r.FechaSalida
-FROM Reservas r
-INNER JOIN Salas s ON s.Id = r.SalaId
-INNER JOIN Clientes c ON c.Id = r.ClienteId
-ORDER BY r.FechaEntrada DESC;";
+                SELECT r.Id,
+                       s.Nombre AS Sala,
+                       c.Nombres || ' ' || c.Apellidos AS Cliente,
+                       c.Cedula AS Cedula,
+                       r.FechaEntrada,
+                       r.FechaSalida
+                FROM Reservas r
+                INNER JOIN Salas s ON s.Id = r.SalaId
+                INNER JOIN Clientes c ON c.Id = r.ClienteId
+                ORDER BY r.FechaEntrada DESC;";
 
                 using (var cmd = new SqliteCommand(sql, connection))
                 using (var reader = cmd.ExecuteReader())
@@ -353,6 +397,41 @@ ORDER BY r.FechaEntrada DESC;";
                     cmd.Parameters.AddWithValue("@Id", id);
                     return cmd.ExecuteNonQuery() > 0;
                 }
+            }
+        }
+
+        public bool ActualizarCliente(Cliente cliente, out string error)
+        {
+            error = null;
+            try
+            {
+                using (var connection = new SqliteConnection(_connectionString))
+                {
+                    connection.Open();
+                    const string sql = @"
+                    UPDATE Clientes 
+                    SET Nombres = @Nombres,
+                        Apellidos = @Apellidos,
+                        Telefono = @Telefono,
+                        Email = @Email,
+                        Direccion = @Direccion
+                    WHERE Id = @Id;";
+                    using (var cmd = new SqliteCommand(sql, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@Nombres", cliente.Nombres);
+                        cmd.Parameters.AddWithValue("@Apellidos", cliente.Apellidos);
+                        cmd.Parameters.AddWithValue("@Telefono", cliente.Telefono ?? string.Empty);
+                        cmd.Parameters.AddWithValue("@Email", cliente.Email ?? string.Empty);
+                        cmd.Parameters.AddWithValue("@Direccion", cliente.Direccion ?? string.Empty);
+                        cmd.Parameters.AddWithValue("@Id", cliente.Id);
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                }
+            }
+            catch (SqliteException ex)
+            {
+                error = ex.Message;
+                return false;
             }
         }
     }

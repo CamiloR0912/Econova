@@ -69,8 +69,11 @@ namespace Econova.ViewModels
 
                 if (confirmado)
                 {
-                    _db.EliminarSala(s.Id);
-                    CargarSalas();
+                    bool exito = _db.EliminarSala(s.Id);
+                    if (exito)
+                        CargarSalas();
+                    else
+                        _dialogService.Informar("No se pudo eliminar la sala.", "Error");
                 }
             }
         }
