@@ -35,6 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <!-- ── Referencias de ensamblado ── -->
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -44,6 +45,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -51,10 +53,21 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
+  <!-- ── Paquetes NuGet ── -->
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="6.0.36" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
+    <PackageReference Include="Tesseract" Version="4.1.1" />
+    <PackageReference Include="AForge.Video" Version="2.2.5" />
+    <PackageReference Include="AForge.Video.DirectShow" Version="2.2.5" />
   </ItemGroup>
+  <!-- ── Copia tessdata al directorio de salida automáticamente ── -->
+  <ItemGroup>
+    <Content Include="tessdata\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <!-- ── Archivos del proyecto (sin cambios) ── -->
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -64,6 +77,7 @@
     <Compile Include="Infrastructure\SqliteDataService.cs" />
     <Compile Include="Models\Sala.cs" />
     <Compile Include="Services\IDialogService.cs" />
+    <Compile Include="Services\OcrService.cs" />
     <Compile Include="ViewModels\PaginaVerSalasViewModel.cs" />
     <Compile Include="ViewModels\VentanaAgregarSalaViewModel.cs" />
     <Compile Include="Views\Pages\PaginaVerSalas.xaml.cs">
@@ -241,6 +255,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="tessdata\spa.traineddata" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -254,5 +269,6 @@
   <ItemGroup>
     <Content Include="Database\schema.sql" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
