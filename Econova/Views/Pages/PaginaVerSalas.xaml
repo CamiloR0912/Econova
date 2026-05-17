@@ -54,6 +54,13 @@
             </Setter>
         </Style>
 
+        <Style x:Key="BtnEditarStyle" TargetType="Button"
+               BasedOn="{StaticResource ActionButtonStyle}">
+            <Setter Property="Background"  Value="#EEF2FF"/>
+            <Setter Property="BorderBrush" Value="#C7D2FE"/>
+            <Setter Property="Foreground"  Value="#2563EB"/>
+        </Style>
+
         <Style x:Key="BtnEliminarStyle" TargetType="Button"
                BasedOn="{StaticResource ActionButtonStyle}">
             <Setter Property="Background"  Value="#FEF2F2"/>
@@ -173,7 +180,7 @@
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="180"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="#" Style="{StaticResource ColHeaderStyle}" HorizontalAlignment="Center"/>
                         <TextBlock Grid.Column="1" Text=""  Style="{StaticResource ColHeaderStyle}"/>
@@ -195,7 +202,7 @@
                                             <ColumnDefinition Width="60"/>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="150"/>
-                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="180"/>
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock Grid.Column="0" Text="{Binding Numero}" Style="{StaticResource CellStyle}" HorizontalAlignment="Center" Foreground="#6B7280"/>
@@ -212,11 +219,16 @@
                                             <TextBlock Text=" personas" Style="{StaticResource CellStyle}" Foreground="#6B7280" Padding="4,0"/>
                                         </StackPanel>
 
-                                        <Button Grid.Column="4" Content="Eliminar"
-                                                Style="{StaticResource BtnEliminarStyle}"
-                                                Command="{Binding DataContext.EliminarCommand, RelativeSource={RelativeSource AncestorType=Page}}"
-                                                CommandParameter="{Binding Id}"
-                                                HorizontalAlignment="Center"/>
+                                        <StackPanel Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Button Content="Editar" Margin="0,0,6,0"
+                                                    Style="{StaticResource BtnEditarStyle}"
+                                                    Command="{Binding DataContext.EditarCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                                    CommandParameter="{Binding Id}"/>
+                                            <Button Content="Eliminar"
+                                                    Style="{StaticResource BtnEliminarStyle}"
+                                                    Command="{Binding DataContext.EliminarCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                                    CommandParameter="{Binding Id}"/>
+                                        </StackPanel>
                                     </Grid>
                                 </Border>
                             </DataTemplate>

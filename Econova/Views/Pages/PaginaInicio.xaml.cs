@@ -29,5 +29,19 @@ namespace Econova.Views.Pages
             var main = Window.GetWindow(this) as MainWindow;
             main?.NavigarASalas();
         }
+
+        // RF-07
+        private void CardPanelSalas_Click(object sender, MouseButtonEventArgs e)
+        {
+            var main = Window.GetWindow(this) as MainWindow;
+            main?.NavigarAPanelSalas();
+        }
+
+        // RF-08
+        private void CardHistorial_Click(object sender, MouseButtonEventArgs e)
+        {
+            var main = Window.GetWindow(this) as MainWindow;
+            main?.NavigarAHistorial();
+        }
     }
 }

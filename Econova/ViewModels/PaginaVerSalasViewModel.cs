@@ -50,11 +50,17 @@ namespace Econova.ViewModels
         }
 
         public ICommand EliminarCommand { get; }
+        public ICommand EditarCommand { get; }
+
+        // RF-06: Evento para solicitar edición desde la vista
+        public delegate bool EditarSalaHandler(Sala sala);
+        public EditarSalaHandler OnEditarSala { get; set; }
 
         public PaginaVerSalasViewModel(IDialogService dialogService)
         {
             _dialogService = dialogService;
             EliminarCommand = new RelayCommand(o => Eliminar(o));
+            EditarCommand = new RelayCommand(o => Editar(o));
             CargarSalas();
         }
 
@@ -78,7 +84,34 @@ namespace Econova.ViewModels
             }
         }
 
-        private void CargarSalas()
+        // RF-06: Editar sala
+        private void Editar(object parameter)
+        {
+            if (parameter is int id)
+            {
+                var s = _todasSalas.FirstOrDefault(x => x.Id == id);
+                if (s == null) return;
+
+                // Delegar a la vista para abrir el diálogo
+                bool? resultado = OnEditarSala?.Invoke(s);
+                if (resultado == true)
+                    CargarSalas();
+            }
+        }
+
+        public bool ActualizarSala(int id, string nombre, int capacidad)
+        {
+            if (_db.ActualizarSala(id, nombre, capacidad, out string error))
+            {
+                CargarSalas();
+                return true;
+            }
+
+            _dialogService.Informar($"No se pudo actualizar la sala.\n{error}", "Error de guardado");
+            return false;
+        }
+
+        public void CargarSalas()
         {
             _todasSalas = _db.ObtenerSalas();
             Filtrar();

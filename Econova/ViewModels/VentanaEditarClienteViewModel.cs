@@ -9,6 +9,7 @@ namespace Econova.ViewModels
     public class VentanaEditarClienteViewModel : ObservableObject
     {
         private Cliente _cliente;
+        private string _cedulaOriginal;
         private string _nombres;
         private string _apellidos;
         private string _cedula;
@@ -60,6 +61,7 @@ namespace Econova.ViewModels
         public VentanaEditarClienteViewModel(Cliente cliente)
         {
             _cliente = cliente;
+            _cedulaOriginal = cliente.Cedula;
             Nombres = cliente.Nombres;
             Apellidos = cliente.Apellidos;
             Cedula = cliente.Cedula;
@@ -80,14 +82,33 @@ namespace Econova.ViewModels
                 return;
             }
 
+            // RF-02: Revalidar unicidad de cédula si fue modificada
+            var db = Econova.Infrastructure.SqliteDataService.Instance;
+            if (Cedula?.Trim() != _cedulaOriginal)
+            {
+                if (string.IsNullOrWhiteSpace(Cedula))
+                {
+                    MessageBox.Show("La cédula es obligatoria.",
+                        "Campo requerido", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (db.ExisteCedulaParaOtroCliente(Cedula.Trim(), _cliente.Id))
+                {
+                    MessageBox.Show("Ya existe otro cliente registrado con esa cédula.",
+                        "Cédula duplicada", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+            }
+
             _cliente.Nombres = Nombres;
             _cliente.Apellidos = Apellidos;
+            _cliente.Cedula = Cedula?.Trim() ?? _cedulaOriginal;
             _cliente.Telefono = Telefono;
             _cliente.Email = Email;
             _cliente.Direccion = Direccion;
 
             // Guardar en base de datos
-            var db = Econova.Infrastructure.SqliteDataService.Instance;
             bool exito = db.ActualizarCliente(_cliente, out string error);
 
             if (exito)

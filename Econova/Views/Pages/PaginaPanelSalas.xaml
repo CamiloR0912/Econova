@@ -1,0 +1,302 @@
+<Page x:Class="Econova.Views.Pages.PaginaPanelSalas"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="#F3F4F6">
+
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#E5E7EB"/>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- ══════ ENCABEZADO ══════ -->
+        <Border Grid.Row="0" Background="White"
+                BorderBrush="{StaticResource BorderColor}"
+                BorderThickness="0,0,0,1"
+                Padding="28,16,28,16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Width="40" Height="40" CornerRadius="10"
+                            Background="#EEF2FF" Margin="0,0,14,0">
+                        <TextBlock Text="&#xE8B9;" FontFamily="Segoe MDL2 Assets"
+                                   FontSize="20" Foreground="#2563EB"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Panel de Salas"
+                                   FontFamily="Segoe UI" FontSize="18"
+                                   FontWeight="Bold" Foreground="#111827"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding ContadorTexto}"
+                                       FontFamily="Segoe UI" FontSize="12"
+                                       Foreground="#6B7280" Margin="0,0,8,0"/>
+                            <TextBlock Text="•" Foreground="#D1D5DB" Margin="0,0,8,0"
+                                       FontSize="12"/>
+                            <TextBlock Text="{Binding ResumenTexto}"
+                                       FontFamily="Segoe UI" FontSize="12"
+                                       Foreground="#6B7280"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+                <Button Grid.Column="1"
+                        Content="Actualizar"
+                        Background="#2563EB" Foreground="White"
+                        FontWeight="SemiBold" FontFamily="Segoe UI"
+                        Padding="16,0" Height="38"
+                        Command="{Binding ActualizarCommand}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                    CornerRadius="8">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Text="&#xE72C;" FontFamily="Segoe MDL2 Assets"
+                                               FontSize="12" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                    <ContentPresenter/>
+                                </StackPanel>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="bd" Property="Background" Value="#1D4ED8"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- ══════ CONTENIDO ══════ -->
+        <Grid Grid.Row="1" Margin="28,20,28,28">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Grid de tarjetas de salas -->
+            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl ItemsSource="{Binding Salas}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Width="220" Margin="0,0,16,16"
+                                    Background="White" CornerRadius="12"
+                                    BorderBrush="{StaticResource BorderColor}"
+                                    BorderThickness="1" Padding="16"
+                                    Cursor="Hand"
+                                    MouseLeftButtonUp="SalaCard_Click"
+                                    Tag="{Binding Id}">
+                                <StackPanel>
+                                    <!-- Icono + Estado -->
+                                    <Grid Margin="0,0,0,12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border Grid.Column="0" Width="42" Height="42"
+                                                CornerRadius="10"
+                                                Background="{Binding ColorFondo}">
+                                            <TextBlock Text="{Binding Inicial}"
+                                                       FontFamily="Segoe UI" FontSize="16"
+                                                       FontWeight="Bold"
+                                                       Foreground="{Binding ColorEstado}"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                                        </Border>
+
+                                        <!-- Badge de estado -->
+                                        <Border Grid.Column="2" CornerRadius="10"
+                                                Padding="8,4"
+                                                Background="{Binding ColorFondo}"
+                                                VerticalAlignment="Top">
+                                            <TextBlock Text="{Binding Estado}"
+                                                       FontFamily="Segoe UI" FontSize="10"
+                                                       FontWeight="SemiBold"
+                                                       Foreground="{Binding ColorEstado}"/>
+                                        </Border>
+                                    </Grid>
+
+                                    <!-- Nombre -->
+                                    <TextBlock Text="{Binding Nombre}"
+                                               FontFamily="Segoe UI" FontSize="14"
+                                               FontWeight="SemiBold" Foreground="#111827"
+                                               Margin="0,0,0,4"/>
+
+                                    <!-- Capacidad -->
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                                        <TextBlock Text="&#xE716;" FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="11" Foreground="#6B7280"
+                                                   Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock FontFamily="Segoe UI" FontSize="12"
+                                                   Foreground="#6B7280">
+                                            <Run Text="{Binding Capacidad, Mode=OneWay}"/>
+                                            <Run Text=" personas"/>
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <!-- Reservas activas -->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="&#xE787;" FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="11" Foreground="#6B7280"
+                                                   Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding TextoReservas}"
+                                                   FontFamily="Segoe UI" FontSize="12"
+                                                   Foreground="#6B7280"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- Panel lateral de detalle -->
+            <Border Grid.Column="1"
+                    Width="340" Margin="0,0,0,0"
+                    Background="White" CornerRadius="12"
+                    BorderBrush="{StaticResource BorderColor}"
+                    BorderThickness="1"
+                    Visibility="{Binding DetalleSalaVisible, Converter={StaticResource BoolToVis}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Cabecera detalle -->
+                    <Border Grid.Row="0" Padding="16,14" Background="#F9FAFB"
+                            CornerRadius="12,12,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="{Binding SalaSeleccionada.Nombre}"
+                                           FontFamily="Segoe UI" FontSize="15"
+                                           FontWeight="Bold" Foreground="#111827"/>
+                                <TextBlock FontFamily="Segoe UI" FontSize="12"
+                                           Foreground="#6B7280">
+                                    <Run Text="Capacidad:"/>
+                                    <Run Text="{Binding SalaSeleccionada.Capacidad, Mode=OneWay}"/>
+                                    <Run Text="personas"/>
+                                </TextBlock>
+                            </StackPanel>
+                            <Button Grid.Column="1" Width="30" Height="30"
+                                    Background="Transparent" BorderThickness="0"
+                                    Cursor="Hand"
+                                    Command="{Binding CerrarDetalleCommand}">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="bd" Background="Transparent" CornerRadius="6">
+                                            <TextBlock Text="&#xE8BB;" FontFamily="Segoe MDL2 Assets"
+                                                       FontSize="10" Foreground="#6B7280"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="bd" Property="Background" Value="#FEE2E2"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </Grid>
+                    </Border>
+
+                    <!-- Estado badge -->
+                    <Border Grid.Row="1" Padding="16,10">
+                        <Border CornerRadius="8" Padding="12,8"
+                                Background="{Binding SalaSeleccionada.ColorFondo}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Ellipse Width="8" Height="8"
+                                         Fill="{Binding SalaSeleccionada.ColorEstado}"
+                                         Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding SalaSeleccionada.Estado}"
+                                           FontFamily="Segoe UI" FontSize="13"
+                                           FontWeight="SemiBold"
+                                           Foreground="{Binding SalaSeleccionada.ColorEstado}"/>
+                            </StackPanel>
+                        </Border>
+                    </Border>
+
+                    <!-- Lista de reservas activas -->
+                    <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Padding="16,0,16,16">
+                        <StackPanel>
+                            <TextBlock Text="Reservas activas"
+                                       FontFamily="Segoe UI" FontSize="13"
+                                       FontWeight="SemiBold" Foreground="#111827"
+                                       Margin="0,0,0,10"/>
+
+                            <ItemsControl ItemsSource="{Binding ReservasSalaSeleccionada}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="#F9FAFB" CornerRadius="8"
+                                                Padding="12" Margin="0,0,0,8"
+                                                BorderBrush="#E5E7EB" BorderThickness="1">
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Cliente}"
+                                                           FontFamily="Segoe UI" FontSize="13"
+                                                           FontWeight="SemiBold" Foreground="#111827"/>
+                                                <TextBlock FontFamily="Segoe UI" FontSize="11"
+                                                           Foreground="#6B7280" Margin="0,2,0,0">
+                                                    <Run Text="{Binding FechaEntrada, Mode=OneWay}"/>
+                                                    <Run Text=" "/>
+                                                    <Run Text="{Binding HoraEntrada, Mode=OneWay}"/>
+                                                    <Run Text=" → "/>
+                                                    <Run Text="{Binding HoraSalida, Mode=OneWay}"/>
+                                                </TextBlock>
+                                                <TextBlock FontFamily="Segoe UI" FontSize="11"
+                                                           Foreground="#9CA3AF" Margin="0,2,0,0">
+                                                    <Run Text="Cédula: "/>
+                                                    <Run Text="{Binding Cedula, Mode=OneWay}"/>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <!-- Mensaje si no hay reservas -->
+                            <TextBlock Text="No hay reservas activas para esta sala."
+                                       FontFamily="Segoe UI" FontSize="12"
+                                       Foreground="#9CA3AF" TextAlignment="Center"
+                                       Margin="0,8,0,0">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ReservasSalaSeleccionada.Count}" Value="0">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

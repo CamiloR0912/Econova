@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using Econova.Models;
 using Econova.ViewModels;
 using Econova.Views.Windows;
 using Econova.Views.Services;
@@ -11,7 +12,36 @@ namespace Econova.Views.Pages
         public PaginaVerSalas()
         {
             InitializeComponent();
-            DataContext = new PaginaVerSalasViewModel(new WpfDialogService());
+            var vm = new PaginaVerSalasViewModel(new WpfDialogService());
+            vm.OnEditarSala = EditarSala;
+            DataContext = vm;
+        }
+
+        // RF-06: Abrir ventana de edición de sala
+        private bool EditarSala(Sala sala)
+        {
+            var ventana = new VentanaEditarSala(sala)
+            {
+                Owner = Window.GetWindow(this)
+            };
+
+            if (ventana.ShowDialog() == true)
+            {
+                var vm = DataContext as PaginaVerSalasViewModel;
+                bool actualizada = vm?.ActualizarSala(sala.Id, ventana.NombreSala, ventana.CapacidadSala) == true;
+                if (actualizada)
+                {
+                    var confirmacion = new VentanaConfirmacionExito(
+                        "La sala ha sido actualizada exitosamente.",
+                        "Actualización exitosa")
+                    {
+                        Owner = Window.GetWindow(this)
+                    };
+                    confirmacion.ShowDialog();
+                }
+                return actualizada;
+            }
+            return false;
         }
 
         private void BtnAgregarSala_Click(object sender, RoutedEventArgs e)

@@ -200,6 +200,15 @@ namespace Econova.ViewModels
                 return;
             }
 
+            // RF-03: Validar que no exista traslape de horarios en la misma sala
+            if (_db.ExisteTraslapeReserva(SalaSeleccionada.Id, fechaEntrada, fechaSalida))
+            {
+                _dialogService.Informar(
+                    "La sala seleccionada ya tiene una reserva activa en ese horario.\nPor favor selecciona otro horario o sala.",
+                    "Conflicto de horario");
+                return;
+            }
+
             string salaTexto = SalaSeleccionada.NombreConCapacidad;
             string fechasTexto = $"{fechaEntrada:dd/MM/yyyy hh:mm tt} -> {fechaSalida:dd/MM/yyyy hh:mm tt}";
             string clienteTexto = $"{cliente.NombreCompleto} • {cliente.Cedula}";

@@ -1,0 +1,214 @@
+<Page x:Class="Econova.Views.Pages.PaginaHistorial"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="#F3F4F6">
+
+    <Page.Resources>
+        <SolidColorBrush x:Key="BorderColor" Color="#E5E7EB"/>
+
+        <Style x:Key="ColHeaderStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily"        Value="Segoe UI"/>
+            <Setter Property="FontSize"          Value="12"/>
+            <Setter Property="FontWeight"        Value="SemiBold"/>
+            <Setter Property="Foreground"        Value="#6B7280"/>
+            <Setter Property="Padding"           Value="12,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="CellStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily"        Value="Segoe UI"/>
+            <Setter Property="FontSize"          Value="13"/>
+            <Setter Property="Foreground"        Value="#000000"/>
+            <Setter Property="Padding"           Value="12,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextTrimming"      Value="CharacterEllipsis"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- ══════ ENCABEZADO ══════ -->
+        <Border Grid.Row="0" Background="White"
+                BorderBrush="{StaticResource BorderColor}"
+                BorderThickness="0,0,0,1"
+                Padding="28,16,28,16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Width="40" Height="40" CornerRadius="10"
+                            Background="#FEF3C7" Margin="0,0,14,0">
+                        <TextBlock Text="&#xE81C;" FontFamily="Segoe MDL2 Assets"
+                                   FontSize="20" Foreground="#D97706"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Historial de Visitas"
+                                   FontFamily="Segoe UI" FontSize="18"
+                                   FontWeight="Bold" Foreground="#111827"/>
+                        <TextBlock Text="Registro histórico de uso de las salas"
+                                   FontFamily="Segoe UI" FontSize="12"
+                                   Foreground="#6B7280"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding ContadorTexto}"
+                               FontFamily="Segoe UI" FontSize="13"
+                               Foreground="#6B7280" VerticalAlignment="Center"
+                               Margin="0,0,16,0"/>
+                    <Button Content="Limpiar filtros"
+                            Background="#F3F4F6" Foreground="#6B7280"
+                            FontFamily="Segoe UI" FontSize="12"
+                            Padding="12,0" Height="34"
+                            BorderThickness="0" Cursor="Hand"
+                            Command="{Binding LimpiarFiltrosCommand}">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                        CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bd" Property="Background" Value="#E5E7EB"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ══════ FILTROS ══════ -->
+        <Border Grid.Row="1" Padding="28,16,28,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="280"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="16"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Buscar por cliente/cédula -->
+                <Border Grid.Column="0" Background="White"
+                        BorderBrush="{StaticResource BorderColor}"
+                        BorderThickness="1" CornerRadius="8" Height="38">
+                    <Grid>
+                        <TextBox Text="{Binding TextoBusqueda, UpdateSourceTrigger=PropertyChanged}"
+                                 Background="Transparent" BorderThickness="0"
+                                 VerticalContentAlignment="Center" Padding="12,0"
+                                 FontFamily="Segoe UI" FontSize="13"/>
+                        <TextBlock Text="&#xE721;" FontFamily="Segoe MDL2 Assets"
+                                   HorizontalAlignment="Right" VerticalAlignment="Center"
+                                   Margin="0,0,12,0" Foreground="#9CA3AF"
+                                   IsHitTestVisible="False"/>
+                    </Grid>
+                </Border>
+
+                <!-- Filtro por sala -->
+                <ComboBox Grid.Column="2" Height="38"
+                          ItemsSource="{Binding SalasDisponibles}"
+                          SelectedItem="{Binding FiltroSala}"
+                          FontFamily="Segoe UI" FontSize="13"
+                          Padding="8,0" VerticalContentAlignment="Center"
+                          BorderBrush="#D1D5DB" BorderThickness="1"/>
+
+                <!-- Fecha desde -->
+                <DatePicker Grid.Column="4" Height="38"
+                            SelectedDate="{Binding FechaDesde}"
+                            FontFamily="Segoe UI" FontSize="12"
+                            BorderBrush="#D1D5DB" BorderThickness="1"/>
+
+                <!-- Fecha hasta -->
+                <DatePicker Grid.Column="6" Height="38"
+                            SelectedDate="{Binding FechaHasta}"
+                            FontFamily="Segoe UI" FontSize="12"
+                            BorderBrush="#D1D5DB" BorderThickness="1"/>
+            </Grid>
+        </Border>
+
+        <!-- ══════ TABLA ══════ -->
+        <Border Grid.Row="2" Margin="28,20,28,28"
+                Background="White" CornerRadius="12"
+                BorderBrush="{StaticResource BorderColor}"
+                BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="44"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Cabeceras -->
+                <Border Grid.Row="0" Background="#F9FAFB" CornerRadius="12,12,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="#" Style="{StaticResource ColHeaderStyle}" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="CLIENTE" Style="{StaticResource ColHeaderStyle}"/>
+                        <TextBlock Grid.Column="2" Text="SALA" Style="{StaticResource ColHeaderStyle}"/>
+                        <TextBlock Grid.Column="3" Text="CÉDULA" Style="{StaticResource ColHeaderStyle}"/>
+                        <TextBlock Grid.Column="4" Text="FECHA ENT." Style="{StaticResource ColHeaderStyle}"/>
+                        <TextBlock Grid.Column="5" Text="HORA ENT." Style="{StaticResource ColHeaderStyle}"/>
+                        <TextBlock Grid.Column="6" Text="FECHA SAL." Style="{StaticResource ColHeaderStyle}"/>
+                        <TextBlock Grid.Column="7" Text="HORA SAL." Style="{StaticResource ColHeaderStyle}"/>
+                    </Grid>
+                </Border>
+
+                <!-- Lista -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding VisitasFiltradas}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="{StaticResource BorderColor}" BorderThickness="0,0,0,1">
+                                    <Grid Height="48">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding Numero}" Style="{StaticResource CellStyle}" HorizontalAlignment="Center" Foreground="#6B7280"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Cliente}" Style="{StaticResource CellStyle}" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding Sala}" Style="{StaticResource CellStyle}"/>
+                                        <TextBlock Grid.Column="3" Text="{Binding Cedula}" Style="{StaticResource CellStyle}" Foreground="#6B7280"/>
+                                        <TextBlock Grid.Column="4" Text="{Binding FechaEntrada}" Style="{StaticResource CellStyle}" FontSize="12"/>
+                                        <TextBlock Grid.Column="5" Text="{Binding HoraEntrada}" Style="{StaticResource CellStyle}" FontSize="12"/>
+                                        <TextBlock Grid.Column="6" Text="{Binding FechaSalida}" Style="{StaticResource CellStyle}" FontSize="12"/>
+                                        <TextBlock Grid.Column="7" Text="{Binding HoraSalida}" Style="{StaticResource CellStyle}" FontSize="12"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>

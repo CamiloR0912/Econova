@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:Econova.ViewModels"
         Title="Editar reserva"
-        Width="420"
+        Width="460"
         SizeToContent="Height"
         WindowStartupLocation="CenterOwner"
         WindowStyle="None"
@@ -71,17 +71,21 @@
             <!-- Contenido -->
             <StackPanel Grid.Row="1" Margin="24,20,24,24">
 
+                <!-- Sala (ComboBox) -->
                 <StackPanel Margin="0,0,0,14">
                     <TextBlock Text="Sala" FontFamily="Segoe UI"
                                FontSize="12" FontWeight="SemiBold"
                                Foreground="#000000" Margin="0,0,0,6"/>
-                    <TextBox Height="38"
-                             Text="{Binding Sala, UpdateSourceTrigger=PropertyChanged}"
-                             FontFamily="Segoe UI" FontSize="13"
-                             Padding="10,0" VerticalContentAlignment="Center"
-                             BorderBrush="#D1D5DB" BorderThickness="1"/>
+                    <ComboBox Height="38"
+                              ItemsSource="{Binding SalasDisponibles}"
+                              SelectedItem="{Binding SalaSeleccionada}"
+                              DisplayMemberPath="NombreConCapacidad"
+                              FontFamily="Segoe UI" FontSize="13"
+                              Padding="10,0" VerticalContentAlignment="Center"
+                              BorderBrush="#D1D5DB" BorderThickness="1"/>
                 </StackPanel>
 
+                <!-- Cliente y Cédula (solo lectura) -->
                 <Grid Margin="0,0,0,14">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -93,10 +97,12 @@
                                    FontSize="12" FontWeight="SemiBold"
                                    Foreground="#000000" Margin="0,0,0,6"/>
                         <TextBox Height="38"
-                                 Text="{Binding Cliente, UpdateSourceTrigger=PropertyChanged}"
+                                 Text="{Binding Cliente}"
                                  FontFamily="Segoe UI" FontSize="13"
                                  Padding="10,0" VerticalContentAlignment="Center"
-                                 BorderBrush="#D1D5DB" BorderThickness="1"/>
+                                 BorderBrush="#D1D5DB" BorderThickness="1"
+                                 IsReadOnly="True" Background="#F9FAFB"
+                                 Foreground="#6B7280"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2">
                         <TextBlock Text="Cédula" FontFamily="Segoe UI"
@@ -112,6 +118,7 @@
                     </StackPanel>
                 </Grid>
 
+                <!-- Fecha entrada + Hora entrada -->
                 <Grid Margin="0,0,0,14">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -122,24 +129,51 @@
                         <TextBlock Text="Fecha entrada" FontFamily="Segoe UI"
                                    FontSize="12" FontWeight="SemiBold"
                                    Foreground="#000000" Margin="0,0,0,6"/>
-                        <TextBox Height="38"
-                                 Text="{Binding FechaEntrada, UpdateSourceTrigger=PropertyChanged}"
-                                 FontFamily="Segoe UI" FontSize="13"
-                                 Padding="10,0" VerticalContentAlignment="Center"
-                                 BorderBrush="#D1D5DB" BorderThickness="1"/>
+                        <DatePicker Height="38"
+                                    SelectedDate="{Binding FechaEntrada}"
+                                    FontFamily="Segoe UI" FontSize="13"
+                                    BorderBrush="#D1D5DB" BorderThickness="1"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2">
                         <TextBlock Text="Hora entrada" FontFamily="Segoe UI"
                                    FontSize="12" FontWeight="SemiBold"
                                    Foreground="#000000" Margin="0,0,0,6"/>
-                        <TextBox Height="38"
-                                 Text="{Binding HoraEntrada, UpdateSourceTrigger=PropertyChanged}"
-                                 FontFamily="Segoe UI" FontSize="13"
-                                 Padding="10,0" VerticalContentAlignment="Center"
-                                 BorderBrush="#D1D5DB" BorderThickness="1"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Height="38"
+                                     Text="{Binding HoraEntradaTexto, UpdateSourceTrigger=PropertyChanged}"
+                                     FontFamily="Segoe UI" FontSize="13"
+                                     Padding="10,0" VerticalContentAlignment="Center"
+                                     BorderBrush="#D1D5DB" BorderThickness="1"/>
+                            <Button Grid.Column="1" Content="{Binding AmPmEntrada}"
+                                    Width="46" Height="38" Margin="4,0,0,0"
+                                    FontFamily="Segoe UI" FontSize="11" FontWeight="SemiBold"
+                                    Background="#EEF2FF" Foreground="#2563EB"
+                                    BorderThickness="0" Cursor="Hand"
+                                    Command="{Binding ToggleAmPmEntradaCommand}">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                                CornerRadius="6">
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="bd" Property="Background" Value="#DBEAFE"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </Grid>
                     </StackPanel>
                 </Grid>
 
+                <!-- Fecha salida + Hora salida -->
                 <Grid Margin="0,0,0,24">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -150,21 +184,47 @@
                         <TextBlock Text="Fecha salida" FontFamily="Segoe UI"
                                    FontSize="12" FontWeight="SemiBold"
                                    Foreground="#000000" Margin="0,0,0,6"/>
-                        <TextBox Height="38"
-                                 Text="{Binding FechaSalida, UpdateSourceTrigger=PropertyChanged}"
-                                 FontFamily="Segoe UI" FontSize="13"
-                                 Padding="10,0" VerticalContentAlignment="Center"
-                                 BorderBrush="#D1D5DB" BorderThickness="1"/>
+                        <DatePicker Height="38"
+                                    SelectedDate="{Binding FechaSalida}"
+                                    FontFamily="Segoe UI" FontSize="13"
+                                    BorderBrush="#D1D5DB" BorderThickness="1"/>
                     </StackPanel>
                     <StackPanel Grid.Column="2">
                         <TextBlock Text="Hora salida" FontFamily="Segoe UI"
                                    FontSize="12" FontWeight="SemiBold"
                                    Foreground="#000000" Margin="0,0,0,6"/>
-                        <TextBox Height="38"
-                                 Text="{Binding HoraSalida, UpdateSourceTrigger=PropertyChanged}"
-                                 FontFamily="Segoe UI" FontSize="13"
-                                 Padding="10,0" VerticalContentAlignment="Center"
-                                 BorderBrush="#D1D5DB" BorderThickness="1"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0" Height="38"
+                                     Text="{Binding HoraSalidaTexto, UpdateSourceTrigger=PropertyChanged}"
+                                     FontFamily="Segoe UI" FontSize="13"
+                                     Padding="10,0" VerticalContentAlignment="Center"
+                                     BorderBrush="#D1D5DB" BorderThickness="1"/>
+                            <Button Grid.Column="1" Content="{Binding AmPmSalida}"
+                                    Width="46" Height="38" Margin="4,0,0,0"
+                                    FontFamily="Segoe UI" FontSize="11" FontWeight="SemiBold"
+                                    Background="#EEF2FF" Foreground="#2563EB"
+                                    BorderThickness="0" Cursor="Hand"
+                                    Command="{Binding ToggleAmPmSalidaCommand}">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="bd" Background="{TemplateBinding Background}"
+                                                CornerRadius="6">
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="bd" Property="Background" Value="#DBEAFE"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </Grid>
                     </StackPanel>
                 </Grid>
 

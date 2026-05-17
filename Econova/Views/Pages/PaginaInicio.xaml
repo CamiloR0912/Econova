@@ -53,7 +53,7 @@
                        Foreground="{StaticResource TextPrimary}"
                        Margin="0,0,0,12"/>
 
-            <UniformGrid Columns="3">
+            <UniformGrid Columns="3" Margin="0,0,0,16">
 
                 <!-- Card Reservas -->
                 <Border Style="{StaticResource QuickCardStyle}" Margin="0,0,10,0"
@@ -127,6 +127,63 @@
                                    FontFamily="Segoe UI" FontSize="13" FontWeight="SemiBold"
                                    Foreground="{StaticResource TextPrimary}"/>
                         <TextBlock Text="Revisa disponibilidad de salas."
+                                   FontFamily="Segoe UI" FontSize="11"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   Margin="0,4,0,0" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+            </UniformGrid>
+
+            <!-- Acceso rápido 2 -->
+            <UniformGrid Columns="2" Margin="0,0,0,16">
+
+                <!-- Card Panel de Salas -->
+                <Border Style="{StaticResource QuickCardStyle}" Margin="0,0,10,0"
+                        MouseLeftButtonUp="CardPanelSalas_Click">
+                    <StackPanel>
+                        <Border Width="40" Height="40" CornerRadius="8"
+                                HorizontalAlignment="Left" Margin="0,0,0,12">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#1D4ED8" Offset="0"/>
+                                    <GradientStop Color="#60A5FA" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <TextBlock Text="&#xE8B9;" FontFamily="Segoe MDL2 Assets"
+                                       FontSize="18" Foreground="White"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="Panel de Salas"
+                                   FontFamily="Segoe UI" FontSize="13" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextPrimary}"/>
+                        <TextBlock Text="Estado de ocupación en tiempo real."
+                                   FontFamily="Segoe UI" FontSize="11"
+                                   Foreground="{StaticResource TextSecondary}"
+                                   Margin="0,4,0,0" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Card Historial -->
+                <Border Style="{StaticResource QuickCardStyle}" Margin="10,0,0,0"
+                        MouseLeftButtonUp="CardHistorial_Click">
+                    <StackPanel>
+                        <Border Width="40" Height="40" CornerRadius="8"
+                                HorizontalAlignment="Left" Margin="0,0,0,12">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#D97706" Offset="0"/>
+                                    <GradientStop Color="#FBBF24" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <TextBlock Text="&#xE81C;" FontFamily="Segoe MDL2 Assets"
+                                       FontSize="18" Foreground="White"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="Historial de Visitas"
+                                   FontFamily="Segoe UI" FontSize="13" FontWeight="SemiBold"
+                                   Foreground="{StaticResource TextPrimary}"/>
+                        <TextBlock Text="Consulta el registro histórico de uso."
                                    FontFamily="Segoe UI" FontSize="11"
                                    Foreground="{StaticResource TextSecondary}"
                                    Margin="0,4,0,0" TextWrapping="Wrap"/>

@@ -22,7 +22,8 @@ namespace Econova.Views.Windows
         {
             Button[] botones = {
         BtnInicio, BtnReservas, BtnCrearReserva, BtnVerReservas,
-        BtnClientes, BtnCrearCliente, BtnVerClientes, BtnSalas
+        BtnClientes, BtnCrearCliente, BtnVerClientes, BtnSalas,
+        BtnPanelSalas, BtnHistorial
     };
 
             foreach (var btn in botones)
@@ -85,6 +86,20 @@ namespace Econova.Views.Windows
         {
             ActivarBoton(BtnCrearCliente);
             FrameContenido.Navigate(new PaginaCrearCliente());
+        }
+
+        // RF-07
+        public void NavigarAPanelSalas()
+        {
+            ActivarBoton(BtnPanelSalas);
+            FrameContenido.Navigate(new PaginaPanelSalas());
+        }
+
+        // RF-08
+        public void NavigarAHistorial()
+        {
+            ActivarBoton(BtnHistorial);
+            FrameContenido.Navigate(new PaginaHistorial());
         }
 
         // ── Title bar ──
@@ -168,6 +183,20 @@ namespace Econova.Views.Windows
         {
             ActivarBoton(BtnSalas);
             FrameContenido.Navigate(new PaginaVerSalas());
+        }
+
+        // RF-07
+        private void BtnPanelSalas_Click(object sender, RoutedEventArgs e)
+        {
+            ActivarBoton(BtnPanelSalas);
+            FrameContenido.Navigate(new PaginaPanelSalas());
+        }
+
+        // RF-08
+        private void BtnHistorial_Click(object sender, RoutedEventArgs e)
+        {
+            ActivarBoton(BtnHistorial);
+            FrameContenido.Navigate(new PaginaHistorial());
         }
 
         private void BtnManual_Click(object sender, RoutedEventArgs e)

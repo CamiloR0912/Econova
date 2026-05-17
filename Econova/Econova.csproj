@@ -176,11 +176,14 @@
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Reserva.cs" />
+    <Compile Include="Models\SalaConEstado.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\PaginaCrearClienteViewModel.cs" />
     <Compile Include="ViewModels\PaginaVerClientesViewModel.cs" />
     <Compile Include="ViewModels\PaginaVerReservasViewModel.cs" />
     <Compile Include="ViewModels\PaginaCrearReservaViewModel.cs" />
+    <Compile Include="ViewModels\PaginaPanelSalasViewModel.cs" />
+    <Compile Include="ViewModels\PaginaHistorialViewModel.cs" />
     <Compile Include="ViewModels\VentanaEditarClienteViewModel.cs" />
     <Compile Include="Views\Pages\PaginaCrearCliente.xaml.cs">
       <DependentUpon>PaginaCrearCliente.xaml</DependentUpon>
@@ -210,6 +213,15 @@
     <Compile Include="Views\Windows\VentanaConfirmacionExito.xaml.cs">
       <DependentUpon>VentanaConfirmacionExito.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\VentanaEditarSala.xaml.cs">
+      <DependentUpon>VentanaEditarSala.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\PaginaPanelSalas.xaml.cs">
+      <DependentUpon>PaginaPanelSalas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\PaginaHistorial.xaml.cs">
+      <DependentUpon>PaginaHistorial.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\Windows\VentanaDetalleReserva.xaml">
@@ -229,6 +241,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Windows\VentanaConfirmacionExito.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\VentanaEditarSala.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\PaginaPanelSalas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\PaginaHistorial.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
