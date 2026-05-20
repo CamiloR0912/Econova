@@ -164,3 +164,9 @@ C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Views\Pages\PaginaHis
 C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Views\Windows\VentanaEditarSala.g.cs
 C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Views\Pages\PaginaPanelSalas.g.cs
 C:\Users\CamiloRamirez\Documents\Econova\Econova\obj\Debug\Views\Pages\PaginaHistorial.g.cs
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Windows\VentanaEditarSala.baml
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Pages\PaginaPanelSalas.baml
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Pages\PaginaHistorial.baml
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Windows\VentanaEditarSala.g.cs
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Pages\PaginaPanelSalas.g.cs
+D:\Universidad\Septimo\software\Econova\Econova\obj\Debug\Views\Pages\PaginaHistorial.g.cs
