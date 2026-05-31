@@ -164,9 +164,11 @@ namespace Econova.ViewModels
         {
             string q = TextoBusqueda?.Trim().ToLower() ?? "";
 
+            var activas = _todasReservas.Where(r => r.FechaSalidaDt > DateTime.Now);
+
             var filtradas = string.IsNullOrEmpty(q)
-                ? _todasReservas
-                : _todasReservas.Where(r =>
+                ? activas.ToList()
+                : activas.Where(r =>
                     r.Sala.ToLower().Contains(q) ||
                     r.Cliente.ToLower().Contains(q) ||
                     r.Cedula.Contains(q)).ToList();
