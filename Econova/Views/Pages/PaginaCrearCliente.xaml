@@ -314,7 +314,7 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0">
-                            <TextBlock Text="Cédula" Style="{StaticResource FieldLabel}"/>
+                            <TextBlock Text="Número de Cédula" Style="{StaticResource FieldLabel}"/>
                             <TextBox x:Name="TxtCedula"
                                      Text="{Binding Cedula, UpdateSourceTrigger=PropertyChanged}"
                                      Style="{StaticResource InputStyle}"
@@ -324,7 +324,7 @@
                         </StackPanel>
 
                         <StackPanel Grid.Column="2">
-                            <TextBlock Text="Teléfono" Style="{StaticResource FieldLabel}"/>
+                            <TextBlock Text="Número de Teléfono" Style="{StaticResource FieldLabel}"/>
                             <TextBox x:Name="TxtTelefono"
                                      Text="{Binding Telefono, UpdateSourceTrigger=PropertyChanged}"
                                      Style="{StaticResource InputStyle}"

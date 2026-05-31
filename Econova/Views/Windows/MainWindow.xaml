@@ -4,7 +4,7 @@
         xmlns:vm="clr-namespace:Econova.ViewModels"
         Title="Econova"
         Icon="/Assets/icono.ico"
-        Width="1100" Height="720"
+        Width="1100" Height="750"
         MinWidth="800" MinHeight="500"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
